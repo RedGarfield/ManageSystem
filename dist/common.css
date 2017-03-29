@@ -1,0 +1,41 @@
+html,body,#react-content,#mainBox{
+  width: 100%;
+	height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+body{
+	font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+    line-height: 1.5;
+    color: rgba(0,0,0,.65);
+    font-size: 14px;
+    background: #fff;
+    -webkit-transition: background 1s cubic-bezier(.075,.82,.165,1);
+    transition: background 1s cubic-bezier(.075,.82,.165,1);
+    overflow-x: hidden;
+}
+/* 登录样式 */
+.login-form {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 20em;
+  height: 17em;
+  padding: 1.8em 1.5em 0 1.5em;
+  background-color: rgba(0,0,0,.1);
+  box-shadow: 10px 10px 20px #888;
+  border-radius: 5px;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+
+/* 布局样式 */
+#react-content > div > div{
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
