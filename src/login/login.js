@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+//引入react-router
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 import 'antd/dist/antd';
 
@@ -19,6 +21,8 @@ class NormalLoginForm extends React.Component {
         console.log('Received values of form: ', values);
       }
     });
+    /*console.log(history);
+    history.push("/main");*/
   }
   render() {
     const { getFieldDecorator } = this.props.form;

@@ -1,29 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-// 引入React-Router模块
-import { Router, Route, hashHistory, IndexRoute} from 'react-router'
+//引入react-router
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 import WrappedNormalLoginForm from './login/login.js';
 import SiderDemo from './main.js';
 
-class LayoutDefault extends React.Component{
-    constructor(props){
-        super(props);
-    }
-    render(){
-        return(
-            <div id='mainBox'>{this.props.children}</div>
-        )
-    }
-}
-
 ReactDOM.render((
-    <Router history={hashHistory} >
-        <Route path="/" component={LayoutDefault}>
-            <IndexRoute path="WrappedNormalLoginForm" component={WrappedNormalLoginForm} />
-            <Route path="SiderDemo" component={SiderDemo} />
-        </Route>
+    <Router>
+        <div>
+            <Route exact path="/" component={WrappedNormalLoginForm} />
+            <Route path="/main" component={SiderDemo} />
+        </div>
     </Router>
     ),document.getElementById("react-content")
 )

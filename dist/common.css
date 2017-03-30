@@ -34,7 +34,7 @@ body{
 }
 
 /* 布局样式 */
-#react-content > div > div{
+#react-content > div, #react-content > div > div{
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;

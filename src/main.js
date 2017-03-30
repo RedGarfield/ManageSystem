@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+//引入react-router
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
