@@ -11,7 +11,6 @@ http.createServer(function(req,res){
     if (pathname.charAt(pathname.length-1)=="/"){
         pathname+="index.html";
     }
-    console.log(path.extname(pathname));
     switch(path.extname(pathname)){
         case ".html":
             res.writeHead(200, {"Content-Type": "text/html"});
@@ -35,6 +34,7 @@ http.createServer(function(req,res){
             res.writeHead(200, {"Content-Type": "application/octet-stream"});
     }
     fs.readFile(pathname,function (err,data){
+    	console.log(data);
         res.end(data);
     });
 }).listen(3333);
