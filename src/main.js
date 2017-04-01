@@ -7,7 +7,7 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
-class SiderDemo extends React.Component {
+class Main extends React.Component {
     state = {
         collapsed: false,
         mode: 'inline',
@@ -59,4 +59,4 @@ class SiderDemo extends React.Component {
     }
 }
 
-export default SiderDemo;
+export default Main;

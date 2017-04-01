@@ -3,7 +3,19 @@ var http = require('http'),
     path = require("path"),
     fs   = require("fs");
 
-http.createServer(function(req,res){
+var express = require("express");
+var app = new express();
+
+app.set('port', process.env.PORT || 3333); // 搭建服务器
+
+app.use(express.static('src')); // 托管静态文件
+app.use(require('body-parser')()); // body中间件解析post请求
+
+app.get('/', function(req,res){ // 访问根目录时重定向到首页
+
+});
+
+/*http.createServer(function(req,res){
 	var pathname=__dirname+url.parse(req.url).pathname;
     if (path.extname(pathname)=="") {
         pathname+="/src/index.html";
@@ -39,4 +51,4 @@ http.createServer(function(req,res){
     });
 }).listen(3333);
 
-console.log("server is start on port localhost:3333");
+console.log("server is start on port localhost:3333");*/

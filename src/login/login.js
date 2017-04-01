@@ -6,9 +6,12 @@ import 'antd/dist/antd';
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
+const path = require("path");
+
 const FormItem = Form.Item;
 
-class NormalLoginForm extends React.Component {
+
+class Login extends React.Component {
   constructor(props){
     super(props);
   }
@@ -16,10 +19,18 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
+        // console.log(this.props.history.push("/main"));
+        // this.props.history.push("/main");
+        fetch(__dirname+'/main?'+JSON.stringfy(values)).then(function(res){
+          console.log(res.json());
+        }).then(function(data){
+          console.log(data);
+        }).catch(function(e){
+          console.err(e);
+        })
       }
     });
-    createBrowserHistory().push("/main");
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -53,6 +64,6 @@ class NormalLoginForm extends React.Component {
   }
 }
 
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+const LoginForm = Form.create()(Login);
 
-export default WrappedNormalLoginForm;
+export default LoginForm;
