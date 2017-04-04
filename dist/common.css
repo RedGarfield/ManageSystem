@@ -14,28 +14,37 @@ body{
     transition: background 1s cubic-bezier(.075,.82,.165,1);
     overflow-x: hidden;
 }
+/* 遮罩层 */
+.ant-spin-container{height: 100%;}
+.ant-spin-nested-loading > div > .ant-spin{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 4;
+    max-height: 100%;
+}
 /* 登录样式 */
 .login-form {
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  width: 20em;
-  height: 17em;
-  padding: 1.8em 1.5em 0 1.5em;
-  background-color: rgba(0,0,0,.1);
-  box-shadow: 10px 10px 20px #888;
-  border-radius: 5px;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    width: 20em;
+    height: 17em;
+    padding: 1.8em 1.5em 0 1.5em;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: 10px 10px 20px #888;
+    border-radius: 5px;
 }
 .login-form-forgot {
-  float: right;
+    float: right;
 }
 .login-form-button {
-  width: 100%;
+    width: 100%;
 }
 
 /* 布局样式 */
 #react-content > div, #react-content > div > div{
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
