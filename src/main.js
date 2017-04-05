@@ -7,13 +7,27 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
+const routes = [{
+    path: '/clinic',
+    exact: true,
+    sidebar: () => <div>home!</div>,
+    main: () => <h2>Home</h2>
+},{ 
+    path: '/bubblegum',
+    sidebar: () => <div>bubblegum!</div>,
+    main: () => <h2>Bubblegum</h2>
+},{
+    path: '/shoelaces',
+    sidebar: () => <div>shoelaces!</div>,
+    main: () => <h2>Shoelaces</h2>
+}];
+
 class Main extends React.Component {
     state = {
         collapsed: false,
         mode: 'inline',
     };
     onCollapse = (collapsed) => {
-        console.log(collapsed);
         this.setState({
             collapsed,
             mode: collapsed ? 'vertical' : 'inline',
@@ -26,7 +40,10 @@ class Main extends React.Component {
                 <Sider breakpoint="lg" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="0" >
                     <div className="logo" />
                     <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>
-                        <SubMenu key="sub1" title={<span><Icon type="user" /><span className="nav-text">User</span></span>} >
+                        {
+                            
+                        }
+                        /*<SubMenu key="sub1" title={<span><Icon type="user" /><span className="nav-text">User</span></span>} >
                             <Menu.Item key="1">Tom</Menu.Item>
                             <Menu.Item key="2">Bill</Menu.Item>
                             <Menu.Item key="3">Alex</Menu.Item>
@@ -40,7 +57,7 @@ class Main extends React.Component {
                                 <Icon type="file" />
                                 <span className="nav-text">File</span>
                             </span>
-                        </Menu.Item>
+                        </Menu.Item>*/
                     </Menu>
                 </Sider>
                 <Layout>

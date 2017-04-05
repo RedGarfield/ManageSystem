@@ -12,7 +12,7 @@ const history = createBrowserHistory();
 const DefaultLayout = () => (
   <Router history={history}>
     <div>
-      <Route exact path="/" component={LoginForm}/>
+      <Route path="/" component={LoginForm}/>
       <Route path="/main" component={Main}/>
     </div>
   </Router>
