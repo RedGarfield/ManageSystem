@@ -13,6 +13,7 @@ const menu = [{
     children:[{
         title: 'home111',
         path: '/main/home111',
+        exact: true,
         children:[]
     },{
         title: 'home222',
@@ -31,9 +32,21 @@ const menu = [{
         path: '/main/table222',
         children:[]
     }]
+},{
+    title: 'about',
+    path: '/main/about',
+    children:[]
 }];
 
+const Home = () => {
+    return <h1>123</h1>
+}
+
 class Main extends React.Component {
+    constructor(props){
+        super(props);
+        this.componentArr = [];
+    }
     state = {
         collapsed: false,
         mode: 'inline',
@@ -44,27 +57,42 @@ class Main extends React.Component {
             mode: collapsed ? 'vertical' : 'inline',
         });
     }
+    setMenu(obj){
+        let arr = [];
+        for(let i = 0, len = obj.length; i < len; i++){ // 循环遍历菜单
+            if(obj[i].children.length > 0){ // 如果有子菜单
+                let templeMenu = (function setSon(sonMenu){ // 菜单递归函数
+                    let sonMenuArr = [];
+                    for(let j = 0, len1 = sonMenu.children.length; j < len1; j++){ // 如果子菜单红包含子菜单就调用递归去遍历
+                        if(sonMenu.children[j].children.length > 0){
+                            sonMenuArr.push(this.setSon(sonMenu.children[j]));
+                        }else{ // 没有再次包含子菜单就直接设置
+                            sonMenuArr.push(<Menu.Item key={sonMenu.children[j].title}><Link to={sonMenu.children[j].path}>{sonMenu.children[j].title}</Link></Menu.Item>);
+                        }
+                    }
+                    // 返回该层级的顶层子菜单
+                    return <SubMenu key={sonMenu.title} title={<span><Icon type="user" /><span className="nav-text">{sonMenu.title}</span></span>} >{sonMenuArr}</SubMenu>
+                })(obj[i]);
+                arr.push(templeMenu);
+            }else{ // 没有子菜单
+                arr.push(<Menu.Item key={obj[i].title}>{obj[i].title}</Menu.Item>);
+            }
+        }
+        return arr;
+    }
     render(){
+        let getMenu = this.setMenu(menu);
         return(
             <Layout>
                 <Sider breakpoint="lg" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="0" >
                     <div className="logo" />
-                    <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>
-                        <SubMenu key="sub1" title={<span><Icon type="user" /><span className="nav-text">User</span></span>} >
-                        {
-                            menu.map((cur, index) => (
-                                
-                                <Menu.Item key={index}><Link to={route.path}></Link></Menu.Item>
-                            ))
-                        }
-                        </SubMenu>
-                    </Menu>
+                    <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>{getMenu}</Menu>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>header</Header>
                     <Content style={{ margin: '24px 16px 0' }}>
                         <div style={{ padding: 24, background: '#fff'}}>
-                            content
+                            
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
@@ -77,19 +105,3 @@ class Main extends React.Component {
 }
 
 export default Main;
-
-/*<SubMenu key="sub1" title={<span><Icon type="user" /><span className="nav-text">User</span></span>} >
-    <Menu.Item key="1">Tom</Menu.Item>
-    <Menu.Item key="2">Bill</Menu.Item>
-    <Menu.Item key="3">Alex</Menu.Item>
-</SubMenu>
-<SubMenu key="sub2" title={<span><Icon type="team" /><span className="nav-text">Team</span></span>} >
-    <Menu.Item key="4">Team 1</Menu.Item>
-    <Menu.Item key="5">Team 2</Menu.Item>
-</SubMenu>
-<Menu.Item key="6">
-    <span>
-        <Icon type="file" />
-        <span className="nav-text">File</span>
-    </span>
-</Menu.Item>*/
