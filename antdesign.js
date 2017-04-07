@@ -12,7 +12,7 @@ app.get('/', function(req,res){ // 访问根目录时重定向到首页
 
 app.post('/main', function(req,res){ // 访问首页
     if(req.query.length !== 0){
-        if(req.query.username === "admin" && req.query.password === "123456"){
+        if(req.query.username === "admin" && req.query.password === "111111"){
             res.json({"success":true,"message":"登录成功..."});
         }else{
             res.json({"success":false,"message":"账号或密码错误..."});

@@ -13,7 +13,6 @@ const menu = [{
     children:[{
         title: 'home111',
         path: '/main/home111',
-        exact: true,
         children:[]
     },{
         title: 'home222',
@@ -38,8 +37,11 @@ const menu = [{
     children:[]
 }];
 
-const Home = () => {
+const Home1 = () => {
     return <h1>123</h1>
+}
+const Home2 = () => {
+    return <h1>321</h1>
 }
 
 class Main extends React.Component {
@@ -92,7 +94,8 @@ class Main extends React.Component {
                     <Header style={{ background: '#fff', padding: 0 }}>header</Header>
                     <Content style={{ margin: '24px 16px 0' }}>
                         <div style={{ padding: 24, background: '#fff'}}>
-                            
+                            <Route path="/main/home111" component={Home1} />
+                            <Route path="/main/home222" component={Home2} />
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
