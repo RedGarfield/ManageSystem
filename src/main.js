@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 //引入react-router
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Dropdown } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -44,6 +44,14 @@ const Home2 = () => {
     return <h1>321</h1>
 }
 
+const menu = (
+    <Menu onClick={onClick}>
+        <Menu.Item key="1">1st menu item</Menu.Item>
+        <Menu.Item key="2">2nd memu item</Menu.Item>
+        <Menu.Item key="3">3d menu item</Menu.Item>
+    </Menu>
+);
+
 class Main extends React.Component {
     constructor(props){
         super(props);
@@ -52,6 +60,7 @@ class Main extends React.Component {
     state = {
         collapsed: false,
         mode: 'inline',
+        userName: 'lxy'
     };
     onCollapse = (collapsed) => {
         this.setState({
@@ -77,7 +86,7 @@ class Main extends React.Component {
                 })(obj[i]);
                 arr.push(templeMenu);
             }else{ // 没有子菜单
-                arr.push(<Menu.Item key={obj[i].title}>{obj[i].title}</Menu.Item>);
+                arr.push(<Menu.Item key={obj[i].title}><Link to={obj[i].path}>{obj[i].title}</Link></Menu.Item>);
             }
         }
         return arr;
@@ -86,21 +95,26 @@ class Main extends React.Component {
         let getMenu = this.setMenu(menu);
         return(
             <Layout>
-                <Sider breakpoint="lg" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="0" >
-                    <div className="logo" />
-                    <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>{getMenu}</Menu>
-                </Sider>
+                <Header style={{ color: '#fff', padding: 0 }}>
+
+                </Header>
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>header</Header>
-                    <Content style={{ margin: '24px 16px 0' }}>
-                        <div style={{ padding: 24, background: '#fff'}}>
-                            <Route path="/main/home111" component={Home1} />
-                            <Route path="/main/home222" component={Home2} />
-                        </div>
-                    </Content>
-                    <Footer style={{ textAlign: 'center' }}>
-                        Ant Design ©2016 Created by Ant UED
-                    </Footer>
+                    <Sider breakpoint="lg" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="0" >
+                        <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>{getMenu}</Menu>
+                    </Sider>
+                    <Layout style={{ padding: '0 24px 24px' }}>
+                        <Breadcrumb style={{ margin: '12px 0' }}>
+                            <Breadcrumb.Item>Home</Breadcrumb.Item>
+                            <Breadcrumb.Item>List</Breadcrumb.Item>
+                            <Breadcrumb.Item>App</Breadcrumb.Item>
+                        </Breadcrumb>
+                        <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
+                            Content
+                        </Content>
+                        <Footer style={{ textAlign: 'right', marginRight: '1em' }}>
+                            @author lxy
+                        </Footer>
+                    </Layout>
                 </Layout>
             </Layout>
         )
@@ -108,3 +122,5 @@ class Main extends React.Component {
 }
 
 export default Main;
+
+
