@@ -1,56 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//引入react-router
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Route, Link, Redirect } from 'react-router-dom'; // 引入react-router
+import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
-import { Layout, Menu, Breadcrumb, Icon, Dropdown } from 'antd';
+import Syslog from './syslog/syslog.js';
+
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
 const menu = [{
-    title: 'home',
+    title: '日志管理',
     path: '',
+    component:'',
     children:[{
-        title: 'home111',
-        path: '/main/home111',
-        children:[]
-    },{
-        title: 'home222',
-        path: '/main/home222',
+        title: '日志查询',
+        path: '/main/syslog',
+        component: 'syslog',
         children:[]
     }]
-},{
-    title: 'table',
-    path: '',
-    children:[{
-        title: 'table111',
-        path: '/main/table111',
-        children:[]
-    },{
-        title: 'table222',
-        path: '/main/table222',
-        children:[]
-    }]
-},{
-    title: 'about',
-    path: '/main/about',
-    children:[]
 }];
-
-const Home1 = () => {
-    return <h1>123</h1>
-}
-const Home2 = () => {
-    return <h1>321</h1>
-}
-
-const menu = (
-    <Menu onClick={onClick}>
-        <Menu.Item key="1">1st menu item</Menu.Item>
-        <Menu.Item key="2">2nd memu item</Menu.Item>
-        <Menu.Item key="3">3d menu item</Menu.Item>
-    </Menu>
-);
 
 class Main extends React.Component {
     constructor(props){
@@ -61,24 +29,42 @@ class Main extends React.Component {
         collapsed: false,
         mode: 'inline',
         userName: 'lxy'
-    };
+    }
+    setRoute = { // 组件菜单映射
+        'syslog': Syslog
+    }
     onCollapse = (collapsed) => {
         this.setState({
             collapsed,
             mode: collapsed ? 'vertical' : 'inline',
         });
     }
-    setMenu(obj){
-        let arr = [];
+    componentDidMount(){ // 组件加载完毕后
+        
+    }
+    onLoginOut({key}){ // 登出方法
+        if(key === "loginout"){
+            alert("退出登录");
+        }
+    }
+    dropdownMenu(){ // 用户信息下拉菜单
+        return <Menu onClick={this.onLoginOut.bind(this)}>
+            <Menu.Item key="loginout">退出账号</Menu.Item>
+        </Menu>
+    }
+    setMenu(obj){ // 设置侧边栏菜单
+        let arr = [], _self = this;
+        _self.componentArr.length = 0; // 由于setState会导致render重绘，所以需要将构造器中动态改变的值重置
         for(let i = 0, len = obj.length; i < len; i++){ // 循环遍历菜单
-            if(obj[i].children.length > 0){ // 如果有子菜单
+            if(obj[i].children && obj[i].children.length > 0){ // 如果有子菜单
                 let templeMenu = (function setSon(sonMenu){ // 菜单递归函数
                     let sonMenuArr = [];
                     for(let j = 0, len1 = sonMenu.children.length; j < len1; j++){ // 如果子菜单红包含子菜单就调用递归去遍历
-                        if(sonMenu.children[j].children.length > 0){
-                            sonMenuArr.push(this.setSon(sonMenu.children[j]));
+                        if(sonMenu.children[j].children && sonMenu.children[j].children.length > 0){
+                            sonMenuArr.push(setSon(sonMenu.children[j]));
                         }else{ // 没有再次包含子菜单就直接设置
-                            sonMenuArr.push(<Menu.Item key={sonMenu.children[j].title}><Link to={sonMenu.children[j].path}>{sonMenu.children[j].title}</Link></Menu.Item>);
+                            _self.componentArr.push({path:sonMenu.children[j].path,component:sonMenu.children[j].component}); // 获取菜单数据的路径和组件
+                            sonMenuArr.push(<Menu.Item key={sonMenu.children[j].title}><Link to={sonMenu.children[j].path}><Icon type="user" />{sonMenu.children[j].title}</Link></Menu.Item>);
                         }
                     }
                     // 返回该层级的顶层子菜单
@@ -86,32 +72,41 @@ class Main extends React.Component {
                 })(obj[i]);
                 arr.push(templeMenu);
             }else{ // 没有子菜单
-                arr.push(<Menu.Item key={obj[i].title}><Link to={obj[i].path}>{obj[i].title}</Link></Menu.Item>);
+                _self.componentArr.push({path:obj[i].path,component:obj[i].component}); // 获取菜单数据的路径和组件
+                arr.push(<Menu.Item key={obj[i].title}><Link to={obj[i].path}><Icon type="user" />{obj[i].title}</Link></Menu.Item>);
             }
         }
         return arr;
     }
     render(){
-        let getMenu = this.setMenu(menu);
+        let _target = this, // 获取this
+            getMenu = _target.setMenu(menu),
+            dropdownMenu = _target.dropdownMenu();
         return(
             <Layout>
-                <Header style={{ color: '#fff', padding: 0 }}>
-
+                <Header>
+                    <div className="top-logo1">
+                        <img src="img/logo.png" alt="logo" />
+                    </div>
+                    <Dropdown overlay={dropdownMenu}>
+                        <a className="ant-dropdown-link" href="javascript:void(0);">欢迎您，{this.state.userName} <Icon type="down" /></a>
+                    </Dropdown>
                 </Header>
                 <Layout>
                     <Sider breakpoint="lg" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="0" >
                         <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>{getMenu}</Menu>
                     </Sider>
-                    <Layout style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '12px 0' }}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
-                            Content
+                    <Layout style={{ background: '#f1f3f6' }}>
+                        <Content style={{ padding: 24, margin: 0 }}>
+                            <Redirect to="/main/syslog"/>
+                            {
+                                this.componentArr.map(function(cur,index,arr){
+                                    let component = _target.setRoute[cur.component];
+                                    return <Route key={index} exact path={cur.path} component={component}/>
+                                })
+                            }
                         </Content>
-                        <Footer style={{ textAlign: 'right', marginRight: '1em' }}>
+                        <Footer style={{ textAlign: 'right' }}>
                             @author lxy
                         </Footer>
                     </Layout>

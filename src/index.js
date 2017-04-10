@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import LoginForm from './login/login.js';
 import Main from './main.js';
 
+import 'antd/dist/antd';
+
 const history = createBrowserHistory();
 
 const DefaultLayout = () => (

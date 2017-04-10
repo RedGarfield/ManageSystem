@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 
-import 'antd/dist/antd';
-
 import { Form, Icon, Input, Button, Checkbox, Spin, Modal } from 'antd';
 
 const FormItem = Form.Item;
