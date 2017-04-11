@@ -21,8 +21,11 @@ const columns = [{
 },{
     title: 'Action',
     key: 'operation',
-    width: 100,
-    render: () => <Button type="primary" ><Icon type="search" />查看</Button>,
+    width: 200,
+    render: () => <div>
+    	<Button type="primary" ><Icon type="search" />查看</Button>
+		<Button type="warning" ><Icon type="edit" />修改</Button>
+    </div>,
 }];
 
 // rowSelection object indicates the need for row selection
@@ -73,7 +76,7 @@ class Syslog extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-							<Form layout="inline">
+							<Form className="searchForm" layout="inline">
 						        <FormItem>
 						        	<Input placeholder="请输入搜索关键字" />
 						        </FormItem>

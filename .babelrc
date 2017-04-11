@@ -5,6 +5,6 @@
       "stage-0"
   ],
   "plugins": [
-    ["import", { libraryName: "antd", style: "css" }] // `style: true` 会加载 less 文件
+    ["import", { libraryName: "antd", style: "css" }] // `style: true` 会加载 less 文件, 使用less区分自定义css和antd的样式顺序
   ]
 }

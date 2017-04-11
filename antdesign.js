@@ -1,3 +1,5 @@
+var path = require("path");
+
 var express = require("express");
 var app = new express();
 
@@ -6,8 +8,16 @@ app.set('port', process.env.PORT || 3000); // 搭建服务器
 app.use(express.static('dist')); // 托管静态文件
 app.use(require('body-parser')()); // body中间件解析post请求
 
-app.get('/', function(req,res){ // 访问根目录时重定向到首页
-    res.sendfile('index.html');
+/*
+app.get('/', function(req,res){ // 回到首页
+    console.log(__dirname);
+    console.log(path.resolve(__dirname, '/dist/index.html'));
+    // res.sendfile(path.resolve(__dirname, '/dist/index.html'));
+});*/
+/*
+app.get('/main/syslog', function(req,res){ // 回到首页
+    console.log(path.resolve(__dirname+'/dist/index.html'));
+    // res.sendfile(path.resolve(__dirname, '/dist/index.html'));
 });
 
 app.post('/main', function(req,res){ // 访问首页
@@ -22,6 +32,7 @@ app.post('/main', function(req,res){ // 访问首页
     }
 });
 
+*/
 app.listen(app.get('port'),function(){
     console.log("server is start on port 3000");
 });

@@ -1,15 +1,24 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var HtmlWebpackPlugin = require("html-webpack-plugin")
-
-var a = 1;
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+var WebpackDevServer = require('webpack-dev-server');
 
 module.exports = {
-	entry: './src/index.js',
+	entry: {
+		bundle: ['./src/index.js', './src/css/common.css'],
+		vendor: ['react', 'react-dom', 'react-router', 'react-router-dom']
+	},
 	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname,'./dist/')
+		filename: '[name].js',
+		path: path.resolve(__dirname,'./dist/'),
+		publicPath: "/"
+	},
+	devServer:{
+		historyApiFallback:true,
+		hot:true,
+		inline:true,
+		progress:true,//报错无法识别，删除后也能正常刷新
 	},
 	module: {
 	    rules: [{
@@ -27,10 +36,17 @@ module.exports = {
 	        })
 	    }, {
 　　　　　　test: /\.(png|jpg)$/,
-　　　　　　loader: 'url-loader?limit=8192&name=images/[name].[ext]'
+　　　　　　loader: 'url-loader?limit=8192&name=./src/img/[name].[ext]'
 　　　  }]
 	},
 	plugins: [
-	    new ExtractTextPlugin("styles.css")
+		new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor']
+        }),
+	    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
+	    new HtmlWebpackPlugin({
+            title: '后台管理系统',
+            template: './src/index.html'
+        })
 	]
 }
