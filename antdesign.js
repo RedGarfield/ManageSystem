@@ -8,18 +8,19 @@ app.set('port', process.env.PORT || 3000); // 搭建服务器
 app.use(express.static('dist')); // 托管静态文件
 app.use(require('body-parser')()); // body中间件解析post请求
 
-/*
+
 app.get('/', function(req,res){ // 回到首页
-    console.log(__dirname);
-    console.log(path.resolve(__dirname, '/dist/index.html'));
-    // res.sendfile(path.resolve(__dirname, '/dist/index.html'));
-});*/
-/*
+    // console.log(__dirname);
+    // console.log(path.resolve(__dirname, '/dist/index.html'));
+    console.log("请求进来了。。。");
+    res.sendfile(__dirname+'/static/index.html');
+});
+
 app.get('/main/syslog', function(req,res){ // 回到首页
     console.log(path.resolve(__dirname+'/dist/index.html'));
     // res.sendfile(path.resolve(__dirname, '/dist/index.html'));
 });
-
+/*
 app.post('/main', function(req,res){ // 访问首页
     if(req.query.length !== 0){
         if(req.query.username === "admin" && req.query.password === "111111"){
