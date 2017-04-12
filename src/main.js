@@ -97,12 +97,12 @@ class Main extends React.Component {
                         <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>{getMenu}</Menu>
                     </Sider>
                     <Layout style={{ background: '#f1f3f6' }}>
-                        <Content style={{ padding: 24, margin: 0 }}>
+                        <Content style={{ padding: "10px 24px", margin: 0 }}>
                             <Redirect to="/main/syslog"/>
                             {
                                 this.componentArr.map(function(cur,index,arr){
                                     let component = _target.setRoute[cur.component];
-                                    return <Route key={index} exact path={cur.path} component={component}/>
+                                    return <Route key={index} path={cur.path} component={component} onEnter/>
                                 })
                             }
                         </Content>

@@ -21,10 +21,9 @@ const columns = [{
 },{
     title: 'Action',
     key: 'operation',
-    width: 200,
+    width: 100,
     render: () => <div>
     	<Button type="primary" ><Icon type="search" />查看</Button>
-		<Button type="warning" ><Icon type="edit" />修改</Button>
     </div>,
 }];
 
@@ -44,19 +43,31 @@ const rowSelection = {
   }),
 };
 
-const data = [];
-for (let i = 0; i < 3; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
-  });
-}
-
 class Syslog extends React.Component{
 	constructor(props){
 		super(props);
+	}
+	state = {
+		getDataArr:[]
+	}
+	componentWillMount(){ // 请求数据
+		let self = this;
+        fetch(__dirname+'query/sysLogList', {
+            method: 'POST',
+        }).then(function(res){
+            return res.json().then(function(data){ // 获取服务器返回的json对象
+                return data;
+            });
+        }).then(function(data){
+            if(data.isLogin === true){ // 如果验证用户信息正确，就跳转到主页面
+                self.setState({"getDataArr": data.list});
+            }else{
+                self.props.history.push("/"); // 未登录跳转登录
+            }
+        }).catch(function(e){
+            console.error(e);
+            self.props.history.push("/"); // 出错或者超时跳转登录
+        });
 	}
 	render(){
 		return(
@@ -90,7 +101,7 @@ class Syslog extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-						    <Table rowSelection={rowSelection} columns={columns} size="middle" dataSource={data} pagination={{ pageSize: 15 }} />
+						    <Table rowSelection={rowSelection} columns={columns} size="small" dataSource={this.state.getDataArr} pagination={{ pageSize: 15 }} />
 						</Card>
 					</Col>
 				</Row>

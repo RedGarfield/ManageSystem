@@ -20,14 +20,14 @@ class Login extends React.Component {
         self.props.form.validateFields((err, values) => {
             if (!err) {
                 self.setState({loading: true});// 打开登录旋转
-                fetch(__dirname+'main?username='+values.userName+'&password='+values.password, {
+                fetch(__dirname+'login?username='+values.userName+'&password='+values.password, {
                     method: 'POST',
                 }).then(function(res){
                     return res.json().then(function(data){ // 获取服务器返回的json对象
                         return data;
                     });
                 }).then(function(data){
-                    if(data.success === true){ // 如果验证用户信息正确，就跳转到主页面
+                    if(data.success === true){ // 如果验证用户信息正确，就跳转到系统首页
                         self.props.history.push("/main");
                     }else{
                         self.setState({loading: false});// 关闭登录旋转
