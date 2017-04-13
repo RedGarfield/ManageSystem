@@ -25,6 +25,10 @@ app.get('/main/syslog', function(req,res){ // 回到首页
     res.render("index");
 });
 
+app.get('/main/addForm', function(req,res){ // 回到首页
+    res.render("index");
+});
+
 /*
  * 接受前端请求
  */

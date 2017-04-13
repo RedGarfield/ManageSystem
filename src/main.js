@@ -4,6 +4,7 @@ import { Route, Link, Redirect } from 'react-router-dom'; // 引入react-router
 import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
 import Syslog from './syslog/syslog.js';
+import AddForm from './addForm/AddForm';
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -18,6 +19,10 @@ const menu = [{
         component: 'syslog',
         children:[]
     }]
+},{
+    title: '新增表单',
+    path: '/main/addForm',
+    component: 'addForm'
 }];
 
 class Main extends React.Component {
@@ -31,7 +36,8 @@ class Main extends React.Component {
         userName: 'lxy'
     }
     setRoute = { // 组件菜单映射
-        'syslog': Syslog
+        'syslog': Syslog,
+        'addForm': AddForm
     }
     onCollapse = (collapsed) => {
         this.setState({

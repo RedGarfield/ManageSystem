@@ -3,29 +3,9 @@ import ReactDOM from 'react-dom';
 //引入react-router
 import {Route, Link } from 'react-router-dom'
 
-import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table } from 'antd';
+import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal } from 'antd';
 
 const FormItem = Form.Item;
-
-const columns = [{
-	title: 'Name',
-	dataIndex: 'name',
-	width: 150
-}, {
-	title: 'Age',
-	dataIndex: 'age',
-	width: 150,
-}, {
-	title: 'Address',
-	dataIndex: 'address',
-},{
-    title: 'Action',
-    key: 'operation',
-    width: 100,
-    render: () => <div>
-    	<Button type="primary" ><Icon type="search" />查看</Button>
-    </div>,
-}];
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -46,9 +26,50 @@ const rowSelection = {
 class Syslog extends React.Component{
 	constructor(props){
 		super(props);
+		this.state = {
+			getDataArr: [],
+			visible: false
+		}
 	}
-	state = {
-		getDataArr:[]
+	getColumns = () => {
+		let obj = this;
+		return [{
+			title: 'Name',
+			dataIndex: 'name',
+			width: 150
+		}, {
+			title: 'Age',
+			dataIndex: 'age',
+			width: 150
+		}, {
+			title: 'Address',
+			dataIndex: 'address'
+		},{
+		    title: 'Action',
+		    key: 'operation',
+		    width: 100,
+		    render(event){
+		    	return(
+			    	<div>
+			    		<Button type="primary" onClick={obj.showModal.bind(obj,event)}><Icon type="search" />查看</Button>
+			    	</div>
+		    	)
+			}
+		}]
+	}
+	showModal = (event) => {
+		console.log(event);
+	    this.setState({ visible: true });
+	}
+	handleOk = (e) => {
+	    this.setState({
+	      	visible: false,
+	    });
+	}
+	handleCancel = (e) => {
+	    this.setState({
+	      	visible: false,
+	    });
 	}
 	componentWillMount(){ // 请求数据
 		let self = this;
@@ -101,13 +122,42 @@ class Syslog extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-						    <Table rowSelection={rowSelection} columns={columns} size="small" dataSource={this.state.getDataArr} pagination={{ pageSize: 15 }} />
+						    <Table rowSelection={rowSelection} columns={this.getColumns()} size="small" dataSource={this.state.getDataArr} pagination={{ pageSize: 15 }} />
 						</Card>
 					</Col>
 				</Row>
+		        <Modal title="Basic Modal" visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
+		        	
+		        </Modal>
 			</div>
 		)
 	}
 }
-
 export default Syslog;
+
+/*
+不能使用此写法去绑定按钮事件，使用该写法时，this指向render，render的词法作用域已经被改变不再指向class组件
+columns = [{
+	title: 'Name',
+	dataIndex: 'name',
+	width: 150
+}, {
+	title: 'Age',
+	dataIndex: 'age',
+	width: 150
+}, {
+	title: 'Address',
+	dataIndex: 'address'
+},{
+    title: 'Action',
+    key: 'operation',
+    width: 100,
+    render(event){
+    	return(
+    	<div>
+    		<Button type="primary" onClick={console.log(this)}><Icon type="search" />查看</Button>
+    	</div>
+    	)
+	}
+}]
+*/
