@@ -4,36 +4,21 @@ import { Route, Link, Redirect } from 'react-router-dom'; // 引入react-router
 import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
 import Syslog from './syslog/syslog.js';
-import AddForm from './addForm/AddForm';
+import AddForm from './addForm/AddForm.js';
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
-
-const menu = [{
-    title: '日志管理',
-    path: '',
-    component:'',
-    children:[{
-        title: '日志查询',
-        path: '/main/syslog',
-        component: 'syslog',
-        children:[]
-    }]
-},{
-    title: '新增表单',
-    path: '/main/addForm',
-    component: 'addForm'
-}];
 
 class Main extends React.Component {
     constructor(props){
         super(props);
         this.componentArr = [];
-    }
-    state = {
-        collapsed: false,
-        mode: 'inline',
-        userName: 'lxy'
+        this.state = {
+            collapsed: false,
+            mode: 'inline',
+            userName: 'lxy',
+            menuArr: []
+        }
     }
     setRoute = { // 组件菜单映射
         'syslog': Syslog,
@@ -45,8 +30,24 @@ class Main extends React.Component {
             mode: collapsed ? 'vertical' : 'inline',
         });
     }
-    componentDidMount(){ // 组件加载完毕后
-        
+    componentDidMount(){ // 组件加载完毕后，请求菜单
+        let self = this;
+        fetch(__dirname+"menuList",{
+            method: "post"
+        }).then(function(res){
+            return res.json().then(function(data){ // 获取服务器返回的json对象
+                return data;
+            });
+        }).then(function(data){
+            if(data.isLogin === true){ // 如果验证用户信息正确，就跳转到主页面，并且加载菜单
+                self.setState({"menuArr": self.setMenu(data.list)});
+            }else{
+                self.props.history.push("/"); // 未登录跳转登录
+            }
+        }).catch(function(e){
+            console.error(e);
+            self.props.history.push("/"); // 出错或者超时跳转登录
+        });
     }
     onLoginOut({key}){ // 登出方法
         if(key === "loginout"){
@@ -86,7 +87,7 @@ class Main extends React.Component {
     }
     render(){
         let _target = this, // 获取this
-            getMenu = _target.setMenu(menu),
+            // getMenu = _target.setMenu(_target.state.menuArr),
             dropdownMenu = _target.dropdownMenu();
         return(
             <Layout>
@@ -100,11 +101,11 @@ class Main extends React.Component {
                 </Header>
                 <Layout>
                     <Sider breakpoint="lg" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="0" >
-                        <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>{getMenu}</Menu>
+                        <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>{this.state.menuArr}</Menu>
                     </Sider>
                     <Layout style={{ background: '#f1f3f6' }}>
                         <Content style={{ padding: "10px 24px", margin: 0 }}>
-                            <Redirect to="/main/syslog"/>
+                            <Redirect to="/main/addForm"/>
                             {
                                 this.componentArr.map(function(cur,index,arr){
                                     let component = _target.setRoute[cur.component];

@@ -44,14 +44,32 @@ app.post('/login', function(req,res){ // 登录请求
     }
 });
 
+app.post('/menuList',function(req,res){ // 查询菜单
+    res.json({"isLogin":true, "list":[{
+            title: '日志管理',
+            path: '',
+            component:'',
+            children:[{
+                title: '日志查询',
+                path: '/main/syslog',
+                component: 'syslog',
+                children:[]
+            }]
+        },{
+            title: '新增表单',
+            path: '/main/addForm',
+            component: 'addForm'
+        }]
+    })
+});
+
 app.post('/query/sysLogList', function(req,res){ // 查询日志列表
-    res.json({"isLogin":true, "path":"/main", "list":[{"key":"M001", "name":"lxy", "age":23, "address":"广东省广州市天河区"},
+    res.json({"isLogin":true, "list":[{"key":"M001", "name":"lxy", "age":23, "address":"广东省广州市天河区"},
         {"key":"M002", "name":"lxy", "age":22, "address":"广东省广州市黄埔区"},
         {"key":"M003", "name":"lxy", "age":21, "address":"广东省广州市越秀区"},
         {"key":"M004", "name":"lxy", "age":20, "address":"广东省广州市荔湾区"},
         {"key":"M005", "name":"lxy", "age":19, "address":"广东省广州市海珠区"}]});
 });
-
 
 /*
  * 启动服务器，监听3000端口
