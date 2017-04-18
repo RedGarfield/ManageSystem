@@ -13,6 +13,13 @@ class TimeRelatedForm extends React.Component {
     constructor(props){
         super(props);
     }
+    state = {
+        disabledEndHours: [], // 
+        disabledEndMinutes: [],
+    }
+    changeStartTime(e){
+        console.log(e);
+    }
 	render() {
     	const { getFieldDecorator } = this.props.form;
     	const formItemLayout = {
@@ -30,11 +37,21 @@ class TimeRelatedForm extends React.Component {
     	};
     	return (
       		<Form onSubmit={this.handleSubmit}>
-                <FormItem wrapperCol={{
-                    xs: { span: 24, offset: 0 },
-                    sm: { span: 16, offset: 8 },
-                }}>
-                    <MyTimePicker disabledHours={[1,2,3,4,5]} placeholder="开始时间" />
+                <FormItem wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } }}>
+                    <Col span="6">
+                        <FormItem>
+                            <MyTimePicker onChange={this.changeStartTime.bind(this)} placeholder="开始时间" />
+                        </FormItem>
+                    </Col>
+                    <Col span="1">
+                        <p className="ant-form-split">-</p>
+                    </Col>
+                    <Col span="6">
+                        <FormItem>
+                            <MyTimePicker disabledHours={this.state.disabledEndHours} placeholder="结束时间" />
+                        </FormItem>
+                    </Col>
+                    
                 </FormItem>
         		<FormItem wrapperCol={{
             		xs: { span: 24, offset: 0 },

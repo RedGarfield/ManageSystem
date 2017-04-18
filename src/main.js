@@ -87,7 +87,6 @@ class Main extends React.Component {
     }
     render(){
         let _target = this, // 获取this
-            // getMenu = _target.setMenu(_target.state.menuArr),
             dropdownMenu = _target.dropdownMenu();
         return(
             <Layout>
