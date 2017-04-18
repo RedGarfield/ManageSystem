@@ -81,13 +81,7 @@ class MyTimePicker extends React.Component {
 						selectedHour: hour, 
 						selectedMinute: minute, 
 					}); 
-
-					try{
-						obj.props.onChange.call(obj); // 通过验证且确认值无误时，执行用户自定义功能
-						obj.props.onChange();
-					}catch(error){
-						console.error(error);
-					}					
+			
 				}else{ // 否则置空
 					e.target.value = "";
 				}
@@ -114,6 +108,11 @@ class MyTimePicker extends React.Component {
 		});
 
 		obj.animateTop(+selectedHour, +selectedMinute, obj.time); // 选中后启用滚动效果
+
+		
+		// let getChange = obj.onHourClick.call(obj.props.onChange);
+		// getChange();
+		
 	}
 	onMinuteClick(e){ // 选中分钟
 		let obj = this, target = e.target;
@@ -159,7 +158,9 @@ class MyTimePicker extends React.Component {
 				let getTop = obj.refs['my-Timepicker-hour'].scrollTop, // 实时获取滚动高度
 					result = getTop - obj.valueHeight*hour, // 实时计算滚动高度差
 					speed = Math.floor(result/5); // 实时计算滚动的正负速度
-				if(Math.abs(result) > 0){ // 如果滚动高度差绝对值大于0，始终滚动
+					// console.log(result);
+					console.log(getTop);
+				if(Math.abs(result) > 0 && speed !== 0){ // 如果滚动高度差绝对值大于0，始终滚动
 					obj.refs['my-Timepicker-hour'].scrollTop = getTop - speed;
 				}else{ // 反之，停止滚动
 					clearInterval(obj.handleHour);
