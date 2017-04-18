@@ -157,12 +157,11 @@ class MyTimePicker extends React.Component {
 			obj.handleHour = setInterval(() => {
 				let getTop = obj.refs['my-Timepicker-hour'].scrollTop, // 实时获取滚动高度
 					result = getTop - obj.valueHeight*hour, // 实时计算滚动高度差
-					speed = Math.floor(result/5); // 实时计算滚动的正负速度
-					// console.log(result);
-					console.log(getTop);
-				if(Math.abs(result) > 0 && speed !== 0){ // 如果滚动高度差绝对值大于0，始终滚动
+					speed = Math.floor(result/7); // 实时计算滚动的正负速度
+				if(Math.abs(result) > 0 && speed !== 0){ // 如果滚动高度差绝对值大于0，并且滚动速度不为0，始终滚动
 					obj.refs['my-Timepicker-hour'].scrollTop = getTop - speed;
 				}else{ // 反之，停止滚动
+					obj.refs['my-Timepicker-hour'].scrollTop = obj.valueHeight*hour; // 修正滚动偏差
 					clearInterval(obj.handleHour);
 				}
 			}, time);
@@ -171,10 +170,12 @@ class MyTimePicker extends React.Component {
 			obj.handleMinute = setInterval(() => {
 				let getTop = obj.refs['my-Timepicker-minute'].scrollTop, // 实时获取滚动高度
 					result = getTop - obj.valueHeight*minute, // 实时计算滚动高度差
-					speed = Math.floor(result/8); // 实时计算滚动的正负速度
-				if(Math.abs(result) > 0){ // 如果滚动高度差绝对值大于0，始终滚动
+					speed = Math.floor(result/4); // 实时计算滚动的正负速度
+				console.log(result);
+				if(Math.abs(result) > 0 && speed !== 0){ // 如果滚动高度差绝对值大于0，并且滚动速度不为0，始终滚动
 					obj.refs['my-Timepicker-minute'].scrollTop = getTop - speed;
 				}else{ // 反之，停止滚动
+					obj.refs['my-Timepicker-minute'].scrollTop = obj.valueHeight*minute; // 修正滚动偏差
 					clearInterval(obj.handleMinute);
 				}
 			}, time);
