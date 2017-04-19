@@ -15,10 +15,20 @@ class TimeRelatedForm extends React.Component {
     }
     state = {
         disabledEndHours: [], // 
-        disabledEndMinutes: [],
+        disabledEndMinutes: { selectHour: 0, selectMinutes: [] },
     }
-    changeStartTime(e){
-        console.log(e);
+    changeStartTime(hour, minute){
+        let hourArr = [], minuteArr = [];
+        for(let i = 0; i < hour; i++){
+            hourArr.push(i);
+        }
+        for(let i = 0; i <= minute; i++){
+            minuteArr.push(i);
+        }
+        this.setState({ 
+            disabledEndHours: hourArr,
+            disabledEndMinutes: { selectHour: hour, selectMinutes: minuteArr }, 
+        });
     }
 	render() {
     	const { getFieldDecorator } = this.props.form;
@@ -26,7 +36,7 @@ class TimeRelatedForm extends React.Component {
       		labelCol: {
 		        xs: { span: 24 },
 		        sm: { span: 8 },
-		     },
+            },
 		    wrapperCol: {
 		        xs: { span: 24 },
 		        sm: { span: 16 },
@@ -48,7 +58,8 @@ class TimeRelatedForm extends React.Component {
                     </Col>
                     <Col span="6">
                         <FormItem>
-                            <MyTimePicker disabledHours={this.state.disabledEndHours} placeholder="结束时间" />
+                            <MyTimePicker disabledHours={this.state.disabledEndHours} disabledMinutes={this.state.disabledEndMinutes} 
+                                placeholder="结束时间" />
                         </FormItem>
                     </Col>
                     
