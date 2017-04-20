@@ -15,16 +15,13 @@ class MyTimePicker extends React.Component {
 		}
 	}
 	state = {
-		id: this.props.id, // 输入框id
-		defaultValue: this.props.defaultValue || "", // 默认值
-		placeholder: this.props.placeholder, // 默认提示文字
 		disabledHours: this.props.disabledHours, // 禁用的小时数组
 		disabledMinutes: this.props.disabledMinutes, // 禁用的分钟对象，包括禁用的小时、分钟的数组
 		getDisabledMinutes: [], // 获取禁用的分钟的数组
 		prevHourSelected: null, // 上一级选择的小时
 		prevMinuteSelected: null, // 上一次选择的分钟
-		selectedHour: "00", // 选中的小时
-		selectedMinute: "00", // 选中的分钟
+		selectedHour: "", // 选中的小时
+		selectedMinute: "", // 选中的分钟
 		isShow: false, // 是否显示选择框
 	}
 	setChange(hour, minute){} // 构造本地的change方法接受用户自定义方法
@@ -85,7 +82,7 @@ class MyTimePicker extends React.Component {
 					}); 
 
 					if(obj.props.onChange){ // 用户是否绑定了自定义onChange
-						obj.setChange(+hour, +minute);
+						obj.setChange(hour, minute);
 					}
 
 					// 值发生变化或点击值时进行判断是否有禁用
@@ -102,68 +99,80 @@ class MyTimePicker extends React.Component {
 		}
 	}
 	onHourClick(e){ // 选中小时
-		let obj = this, target = e.target;
-		if(target.className === "my-TimePicker-time-selected-disabled"){ // 如果是禁止选择的时间
+		let obj = this, target = e.target,
+			selectedHour = target.innerHTML, // 获取已经选中的小时
+			selectedMinute = obj.state.selectedMinute; // 获取已经选中的分钟
+
+		/*
+		 * 判断是否添加选中
+		 * 1、如果是禁止选择的时间，return
+		 * 2、如果上一次存在选中的时间就清空选中样式
+		 * 3、通过前两次判断后添加当前选择为选中
+		 */
+		if(target.className === "my-TimePicker-time-selected-disabled"){
 			return ;
 		}
-		if(obj.state.prevHourSelected){ // 如果上一次存在选中的时间就清空选中样式
+		if(obj.state.prevHourSelected){
 			obj.state.prevHourSelected.className = "";
 		}
-		target.className = "my-TimePicker-time-selected"; // 添加当前选中
-		// 获取已经选中的小时和分钟
-		let selectedHour = target.innerHTML, 
-			selectedMinute = obj.state.selectedMinute;
-		obj.refs['my-Timepicker-text'].value = selectedHour+":"+selectedMinute; // 设置文本框的值
-		// 将当前选中设置为上一次选中
-		obj.setState({ 
+		target.className = "my-TimePicker-time-selected";
+
+		// 如果有选中的分钟,就设置文本框值，然后判断是否绑定onchange
+		if(selectedMinute !== ""){ 
+			obj.refs['my-Timepicker-text'].value = selectedHour+":"+selectedMinute;
+			if(obj.props.onChange){
+				obj.setChange(+selectedHour, +selectedMinute);
+			}
+		}
+
+		obj.animateTop(selectedHour, selectedMinute, obj.time); // 选中后启用滚动效果
+		
+		obj.setState({ // 将当前选中设置为上一次选中
 			prevHourSelected: target, 
 			selectedHour: selectedHour, 
 		});
 
-		obj.animateTop(+selectedHour, +selectedMinute, obj.time); // 选中后启用滚动效果
-
-		if(obj.props.onChange){ // 用户是否绑定了自定义onChange
-			obj.setChange(+selectedHour, +selectedMinute);
-		}
-
-		// 值发生变化或点击值时进行判断是否有禁用
-		if(obj.state.disabledMinutes.selectMinutes.length > 0 && +selectedHour === +obj.state.disabledMinutes.selectHour){
+		// 值发生变化或点击值时进行判断是否存在禁用
+		if(obj.state.disabledMinutes.selectMinutes.length > 0 && +selectedHour === obj.state.disabledMinutes.selectHour){
 			this.setState({ getDisabledMinutes: obj.state.disabledMinutes.selectMinutes });
 		}else{
 			this.setState({ getDisabledMinutes: [] });
 		}
 	}
 	onMinuteClick(e){ // 选中分钟
-		let obj = this, target = e.target;
-		if(e.target.className === "my-TimePicker-time-selected-disabled"){ // 如果是禁止选择的时间
+		let obj = this, target = e.target, 
+			selectedHour = obj.state.selectedHour, // 获取已经选中的小时
+			selectedMinute = target.innerHTML; // 获取已经选中的分钟
+
+		/*
+		 * 判断是否添加选中
+		 * 1、如果是禁止选择的时间，return
+		 * 2、如果上一次存在选中的时间就清空选中样式
+		 * 3、通过前两次判断后添加当前选择为选中
+		 */
+		if(e.target.className === "my-TimePicker-time-selected-disabled"){
 			return ;
 		}
-		if(obj.state.prevMinuteSelected){ // 如果上一次存在选中的时间就清空选中样式
+		if(obj.state.prevMinuteSelected){
 			obj.state.prevMinuteSelected.className = "";
 		}
-		e.target.className = "my-TimePicker-time-selected"; // 添加当前选中
-		// 获取已经选中的小时和分钟
-		let selectedHour = obj.state.selectedHour,
-			selectedMinute = target.innerHTML;
-		obj.refs['my-Timepicker-text'].value = selectedHour+":"+selectedMinute; // 设置文本框的值
+		e.target.className = "my-TimePicker-time-selected";
+
+		// 如果有选中的小时,就设置文本框值，然后判断是否绑定onchange
+		if(selectedHour !== ""){ 
+			obj.refs['my-Timepicker-text'].value = selectedHour+":"+selectedMinute;
+			if(obj.props.onChange){
+				obj.setChange(+selectedHour, +selectedMinute);
+			}
+		}
+
 		// 将当前选中设置为上一次选中
 		obj.setState({ 
 			prevMinuteSelected: target, 
 			selectedMinute: selectedMinute,
 		});
 
-		obj.animateTop(+selectedHour, +selectedMinute, obj.time); // 选中后启用滚动效果
-  
-		if(obj.props.onChange){ // 用户是否绑定了自定义onChange
-			obj.setChange(+selectedHour, +selectedMinute);
-		}
-		
-		// 值发生变化或点击值时进行判断是否有禁用
-		if(obj.state.disabledMinutes.selectMinutes.length > 0 && +selectedHour === +obj.state.disabledMinutes.selectHour){
-			this.setState({ getDisabledMinutes: obj.state.disabledMinutes.selectMinutes });
-		}else{
-			this.setState({ getDisabledMinutes: [] });
-		}
+		obj.animateTop(selectedHour, selectedMinute, obj.time); // 选中后启用滚动效果
 	}
 	animateTop(hour, minute, time){ // 时间滚动效果
 		// 判断参数是否合法
@@ -174,8 +183,12 @@ class MyTimePicker extends React.Component {
 		clearInterval(obj.handleHour);
 		clearInterval(obj.handleMinute);
 
+		// 不为空就转成数字
+		hour = (hour === "")?"":+hour;
+		minute = (minute === "")?"":+minute;
+
 		// 判断是否进行动画
-		if(curHourTop !== obj.valueHeight*hour){
+		if(curHourTop !== obj.valueHeight*hour && hour !== ""){
 			obj.handleHour = setInterval(() => {
 				let getTop = obj.refs['my-Timepicker-hour'].scrollTop, // 实时获取滚动高度
 					result = getTop - obj.valueHeight*hour, // 实时计算滚动高度差
@@ -188,7 +201,7 @@ class MyTimePicker extends React.Component {
 				}
 			}, time);
 		}
-		if(curMinuteTop !== obj.valueHeight*minute){
+		if(curMinuteTop !== obj.valueHeight*minute && minute !== ""){
 			obj.handleMinute = setInterval(() => {
 				let getTop = obj.refs['my-Timepicker-minute'].scrollTop, // 实时获取滚动高度
 					result = getTop - obj.valueHeight*minute, // 实时计算滚动高度差
@@ -202,25 +215,6 @@ class MyTimePicker extends React.Component {
 			}, time);
 		}
 	}
-	reset(hour, minute){ // 接收到选择开始/结束时间后，进行效果同步
-		let obj = this;
-		obj.refs['my-Timepicker-text'].value = ""; // 置空文本框值
-
-		// 清除已选择项并将
-		let hourList = Array.from(obj.refs['my-Timepicker-hour'].getElementsByTagName("li")), 
-			minuteList = Array.from(obj.refs['my-Timepicker-minute'].getElementsByTagName("li"));
-		for(let i = 0, len = hourList.length; i < len; i++){
-			if(hourList[i].className === "my-TimePicker-time-selected"){
-				hourList[i].className = "";
-			}
-		}
-		for(let i = 0, len = minuteList.length; i < len; i++){
-			if(minuteList[i].className === "my-TimePicker-time-selected"){
-				minuteList[i].className = "";
-			}
-		}
-		obj.setState({  })
-	}
 	componentDidMount(){
 		/* 
 		 * 加载完毕后初始化：
@@ -228,44 +222,42 @@ class MyTimePicker extends React.Component {
 		 * 2、设置值所在的高度;
 		 * 3、设置是否禁用;
 		 */
-		/*let obj = this, value = obj.props.value;
-		if(value !== ""){
+		let obj = this, value = obj.props.defaultValue;
+
+		if(obj.reg.test(value)){
 			let hour = +value.replace(" ","").split(":")[0], minute = +value.replace(" ","").split(":")[1];
-			obj.refs['my-Timepicker-hour'].scrollTop = hour*obj.valueHeight;
-			obj.refs['my-Timepicker-minute'].scrollTop = minute*obj.valueHeight;
-		}*/
+		}
 	}
 	componentWillReceiveProps(nextProps){ // 已加载组件收到新的参数时调用
-		this.setState({ 
+		/*
+		 * 变量说明：curHour -> 上一次选中的小时；getHour -> 要禁用的小时
+		 * 接受到开始/结束时间改变时，判断步骤：
+		 * 1、判断是否存在已经点击过的小时，并判断接受到的小时是否为有效值
+		 * 2、判断点击的小时与接受到的小时是否相等
+		 * 3、若相等则重新构造禁用的分钟
+		 * 4、若不相等则在小时点击处进行判断
+		 */
+
+		let obj = this, curHour = obj.state.prevHourSelected, getHour = nextProps.disabledMinutes.selectHour;
+		obj.setState({ 
 			disabledHours: nextProps.disabledHours,
 			disabledMinutes: nextProps.disabledMinutes, 
 		});
-
-		/*
-		 * 接受到开始/结束时间改变时，判断步骤：
-		 * 1、判断是否接收到要禁用的值
-		 * 2、判断是否存在已经点击过的小时
-		 * 3、判断点击的小时与接受到的小时是否相等
-		 * 4、若相等则重新构造禁用的分钟
-		 * 5、若不相等则在小时点击处进行判断
-		 */
-		if(nextProps.disabledMinutes.selectMinutes.length > 0){
-			let curHour = this.state.prevHourSelected;
-
-			if(curHour && +curHour.innerHTML === nextProps.disabledMinutes.selectHour){
-				this.setState({ getDisabledMinutes: nextProps.disabledMinutes.selectMinutes }); 
-			}else{
-				this.setState({ getDisabledMinutes: [] }); 
-			}
+		if(curHour && getHour !== "" && +curHour.innerHTML === getHour){
+			console.log(getHour);
+			obj.setState({ getDisabledMinutes: nextProps.disabledMinutes.selectMinutes }); 
 		}
+	}
+	onBlur(e){
+		
 	}
 	render(){
 		let obj = this;
 		return(
-			<div className="my-TimePicker-wrapper">
+			<div className="my-TimePicker-wrapper" >
 				<div className="my-TimePicker-header">
 					<span class="ant-time-picker ">
-						<input id={obj.state.id} placeholder={obj.state.placeholder}
+						<input id={obj.props.id} placeholder={obj.props.placeholder}
 							ref="my-Timepicker-text" className="ant-time-picker-input"
 							onFocus={obj.onFocus.bind(this)} onBlur={obj.onBlur.bind(this)}
 							onChange={obj.onChange.bind(this)} />
@@ -311,12 +303,14 @@ class MyTimePicker extends React.Component {
 
 MyTimePicker.propTypes = {
  	id: React.PropTypes.string,
+ 	defaultValue: React.PropTypes.string, // 默认值
  	placeholder: React.PropTypes.string,
  	disabledHours: React.PropTypes.array, // 禁用的小时数组
  	disabledMinutes: React.PropTypes.object // 禁用的分钟对象，包括选择的小时、禁用的分钟的数组
 };
 MyTimePicker.defaultProps = {
 	id: "",
+	defaultValue: "",
 	placeholder: "请选择时间",
 	disabledHours: [],
 	disabledMinutes: { selectHour: "", selectMinutes: [] }
