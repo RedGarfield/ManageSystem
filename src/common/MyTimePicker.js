@@ -9,7 +9,6 @@ class MyTimePicker extends React.Component {
 		this.handleHour = null; // 小时滚动定时器
 		this.handleMinute = null; // 分钟滚动定时器
 		this.time = 50; // 滚动时间频率
-
 		if(props.onChange){ // 如果用户使用了自定义onChange，就将用户的onChange赋值给本地的setChange属性
 			this.setChange = props.onChange; 
 		}
@@ -98,6 +97,8 @@ class MyTimePicker extends React.Component {
 			}
 		}
 	}
+	/* 绑定事件选中与receiveprops冲突
+		原因：click点击后执行是否禁用判断，此时receiveProps尚未收到更新返回后的禁用数据，当受到禁用数据后，此次click点击已经处理完毕
 	onHourClick(e){ // 选中小时
 		let obj = this, target = e.target,
 			selectedHour = target.innerHTML, // 获取已经选中的小时
@@ -108,7 +109,7 @@ class MyTimePicker extends React.Component {
 		 * 1、如果是禁止选择的时间，return
 		 * 2、如果上一次存在选中的时间就清空选中样式
 		 * 3、通过前两次判断后添加当前选择为选中
-		 */
+		 *
 		if(target.className === "my-TimePicker-time-selected-disabled"){
 			return ;
 		}
@@ -132,6 +133,7 @@ class MyTimePicker extends React.Component {
 			selectedHour: selectedHour, 
 		});
 
+		console.log(+selectedHour + " - " + obj.state.disabledMinutes.selectedHour);
 		// 值发生变化或点击值时进行判断是否存在禁用
 		if(obj.state.disabledMinutes.selectMinutes.length > 0 && +selectedHour === obj.state.disabledMinutes.selectHour){
 			this.setState({ getDisabledMinutes: obj.state.disabledMinutes.selectMinutes });
@@ -149,7 +151,7 @@ class MyTimePicker extends React.Component {
 		 * 1、如果是禁止选择的时间，return
 		 * 2、如果上一次存在选中的时间就清空选中样式
 		 * 3、通过前两次判断后添加当前选择为选中
-		 */
+		 *
 		if(e.target.className === "my-TimePicker-time-selected-disabled"){
 			return ;
 		}
@@ -173,7 +175,7 @@ class MyTimePicker extends React.Component {
 		});
 
 		obj.animateTop(selectedHour, selectedMinute, obj.time); // 选中后启用滚动效果
-	}
+	}*/
 	animateTop(hour, minute, time){ // 时间滚动效果
 		// 判断参数是否合法
 
@@ -244,7 +246,6 @@ class MyTimePicker extends React.Component {
 			disabledMinutes: nextProps.disabledMinutes, 
 		});
 		if(curHour && getHour !== "" && +curHour.innerHTML === getHour){
-			console.log(getHour);
 			obj.setState({ getDisabledMinutes: nextProps.disabledMinutes.selectMinutes }); 
 		}
 	}
@@ -266,7 +267,7 @@ class MyTimePicker extends React.Component {
 				</div>
 				<div style={{ display:(obj.state.isShow)?"block":"none" }} ref="my-Timepicker-content" className="my-TimePicker-content">
 					<div ref="my-Timepicker-hour" className="my-TimePicker-content-box">
-						<ul className="my-TimePicker-content-menu" onClick={obj.onHourClick.bind(obj)} >
+						<ul className="my-TimePicker-content-menu" onClick={obj.onHourClick} >
 						{
 							obj.range(0, 23).map((cur, index) => {
 								let getHour = cur, setClass = "";
@@ -281,7 +282,7 @@ class MyTimePicker extends React.Component {
 						</ul>
 					</div>
 					<div ref="my-Timepicker-minute" className="my-TimePicker-content-box">
-						<ul className="my-TimePicker-content-menu" onClick={obj.onMinuteClick.bind(this)} >
+						<ul className="my-TimePicker-content-menu" onClick={obj.onMinuteClick} >
 						{
 							obj.range(0, 59).map((cur, index) => {
 								let getHour = cur, setClass = "";
