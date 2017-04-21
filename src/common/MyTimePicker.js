@@ -215,6 +215,7 @@ class MyTimePicker extends React.Component {
 			if(minuteClass !== "my-TimePicker-time-selected-disabled"){
 				minuteObj.className = "my-TimePicker-time-selected";
 			}
+			obj.refs['my-Timepicker-text'].value = obj.props.defaultValue;
 
 			obj.prevHourSelected = hourObj; // 上一级选择的小时
 			obj.prevMinuteSelected = minuteObj; // 上一次选择的分钟
@@ -247,7 +248,7 @@ class MyTimePicker extends React.Component {
 			<div className="my-TimePicker-wrapper" onMouseMove={obj.onMouseMove} onMouseOut={obj.onMouseOut}>
 				<div className="my-TimePicker-header">
 					<span class="ant-time-picker ">
-						<input id={obj.props.id} placeholder={obj.props.placeholder} value={obj.props.defaultValue}
+						<input id={obj.props.id} placeholder={obj.props.placeholder}
 							ref="my-Timepicker-text" className="ant-time-picker-input"
 							onChange={obj.onChange.bind(this)} />
 					</span>
