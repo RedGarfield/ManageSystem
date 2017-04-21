@@ -35,7 +35,7 @@ class MyTimePicker extends React.Component {
 	}
 	onChange(e){
 		e.stopPropagation();
-		let obj = this, value = e.target.value.toString().trim(), reg = obj.reg;
+		let obj = this, value = e.target.value.trim(), reg = obj.reg;
 		if(value.length !== 0){
 			if(value.trim().length === 5){ // 符合长度要求后进行正则验证
 				if(reg.test(value)){
@@ -69,6 +69,8 @@ class MyTimePicker extends React.Component {
 						if(obj.props.onChange){ // 用户是否绑定了自定义onChange
 							obj.setChange(hour, minute);
 						}
+					}else{ // 输入为禁用数时清空值
+						obj.refs['my-Timepicker-text'].value = "";
 					}
 				}else{ // 置空
 					e.target.value = "";
