@@ -253,7 +253,7 @@ class MyTimePicker extends React.Component {
 							onChange={obj.onChange.bind(this)} />
 					</span>
 				</div>
-				<div style={{ display:(obj.state.isShow)?"block":"none" }} ref="my-Timepicker-content" className="my-TimePicker-content">
+				<div style={{ height:(obj.state.isShow)?"138px":"0px" }} ref="my-Timepicker-content" className="my-TimePicker-content">
 					<div ref="my-Timepicker-hour" className="my-TimePicker-content-box">
 						<ul className="my-TimePicker-content-menu" onClick={obj.hourClick} >
 						{
