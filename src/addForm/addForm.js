@@ -58,42 +58,87 @@ class TimeRelatedForm extends React.Component {
     constructor(props){
         super(props);
         this.startHour = "";
+        this.startMinute = "";
         this.endHour = "";
+        this.endMinute = "";
     }
     state = {
         sex:1,
         disabledStartHours: [], // 需要禁用的开始时间数组
-        disabledStartMinutes: { selectHour: "", selectMinutes: [] }, // 需要禁用的开始分钟对象包括，禁用开始小时、开始分钟数组
+        disabledStartMinutes: [], // 需要禁用的开始分钟对象包括，禁用开始小时、开始分钟数组
         disabledEndHours: [], // 需要禁用的结束时间数组
-        disabledEndMinutes: { selectHour: "", selectMinutes: [] }, // 需要禁用的结束分钟对象包括，禁用结束小时、结束分钟数组
+        disabledEndMinutes: [], // 需要禁用的结束分钟对象包括，禁用结束小时、结束分钟数组
     }
-    changeStartTime(hour, minute){ // 开始时间改变后回调
-        let obj = this, oldHour = obj.startHour, 
-            hourArr = (minute === 59)?obj.range(0, hour, "<="):obj.range(0, hour, "<"), // 分钟等于59时，小时进一位
-            minuteArr = [];
-        if(oldHour === "" || oldHour === hour){
-            minuteArr = (minute === 59)?[]:obj.range(0, minute, "<=");
+    /*
+     * 参数说明：hour -> 回调小时，minute -> 回调分钟
+     * 变量说明：obj -> 当前上下文, endHourArr -> 禁用结束小时数组，endMinuteArr -> 禁用结束分钟数组，
+     *           startMinuteArr -> 禁用开始分钟数组，preEndHour -> 上一次选中的结束小时
+     *           preEndMinute -> 上一次选中的结束分钟
+     * 方法说明：选中时间后的回调方法，start和end是开始与结束，两个方法功能相同
+     *      1、只选中时间时，返回禁用的小时（不包括选中的小时）
+     *      2、判断时间和分钟是否同时选中，返回禁用的小时数组，根据分钟的位置决定小时是否进退
+     *      3、在时间和分钟同时选中时，继续判断是否存在已经选中的开始/结束小时并判断是否和当前选中小时相等，返回禁用的分钟数组
+     *      4、判断开始/结束小时和分钟是否选中，并判断开始/结束小时否和当前小时相等，返回当前元素需要禁用的分钟数组
+     */
+    changeStartTime(hour, minute){ 
+        let obj = this, 
+            endHourArr = [], 
+            endMinuteArr = [], 
+            startMinuteArr = [], 
+            preEndHour = obj.endHour, 
+            preEndMinute = obj.endMinute; 
+
+        if(hour !== ""){
+            endHourArr = obj.range(0, +hour, "<");
         }
+        if(hour !== "" && minute !== ""){
+            endHourArr = (+minute === 59)?obj.range(0, +hour):obj.range(0, +hour, "<");
+            if(preEndHour !== "" && parseInt(preEndHour) === parseInt(hour)){
+                endMinuteArr = obj.range(0, +minute);
+            }
+        }
+        if(hour !== "" && preEndHour !== "" && preEndMinute !== "" && parseInt(preEndHour) === parseInt(hour)){
+            startMinuteArr = obj.range(+preEndMinute, 59);
+        }
+
         obj.startHour = hour;
+        obj.startMinute = minute;
         obj.setState({ 
-            disabledEndHours: hourArr,
-            disabledEndMinutes: { selectHour: hour, selectMinutes: minuteArr }, 
+            disabledStartMinutes: startMinuteArr, 
+            disabledEndHours: endHourArr,
+            disabledEndMinutes: endMinuteArr, 
         });
     }
     changeEndTime(hour, minute){ // 结束时间改变后回调
-        let obj = this, oldHour = obj.endHour, 
-            hourArr = (minute === 0)?obj.range(hour, 23, "<="):obj.range(hour+1, 23, "<="), // 选择0时，小时不变，大于0时，开始小时进一位
-            minuteArr = [];
-        if(oldHour === "" || oldHour === hour){
-            minuteArr = (minute === 0)?[]:obj.range(minute, 59, "<=")
+        let obj = this, 
+            startHourArr = [], 
+            startMinuteArr = [], 
+            endMinuteArr = [], 
+            preStartHour = obj.startHour, 
+            preStartMinute = obj.startMinute;
+
+        if(hour !== ""){
+            startHourArr = obj.range((+hour)+1, 23);
         }
-        this.endHour = hour;
+        if(hour !== "" && minute !== ""){
+            startHourArr = (+minute === 0)?obj.range(+hour, 23):obj.range((+hour)+1, 23);
+            if(preStartHour !== "" && parseInt(preStartHour) === parseInt(hour)){
+                startMinuteArr = obj.range(+minute, 59);
+            }
+        }
+        if(hour !== "" && preStartHour !== "" && preStartMinute !== "" && parseInt(preStartHour) === parseInt(hour)){
+            endMinuteArr = obj.range(0, +preStartMinute);
+        }
+
+        obj.endHour = hour; 
+        obj.endMinute = minute; 
         obj.setState({ 
-            disabledStartHours: hourArr,
-            disabledStartMinutes: { selectHour: hour, selectMinutes: minuteArr }, 
+            disabledEndMinutes: endMinuteArr, 
+            disabledStartHours: startHourArr,
+            disabledStartMinutes: startMinuteArr, 
         });
     }
-    range(start, end, type){
+    range(start, end, type = "<="){
         let arr = [];
         if(type === "<"){
             for(let i = start; i < end; i++){
@@ -136,7 +181,7 @@ class TimeRelatedForm extends React.Component {
                     <Col span="6">
                         <FormItem>
                             <MyTimePicker onChange={this.changeStartTime.bind(this)} placeholder="开始时间" 
-                                disabledHours={this.state.disabledStartHours} 
+                                disabledHours={this.state.disabledStartHours} defaultValue="07:30"
                                 disabledMinutes={this.state.disabledStartMinutes} />
                         </FormItem>
                     </Col>
@@ -146,7 +191,7 @@ class TimeRelatedForm extends React.Component {
                     <Col span="6">
                         <FormItem>
                             <MyTimePicker onChange={this.changeEndTime.bind(this)} placeholder="结束时间" 
-                                disabledHours={this.state.disabledEndHours} 
+                                disabledHours={this.state.disabledEndHours} defaultValue="18:30"
                                 disabledMinutes={this.state.disabledEndMinutes} />
                         </FormItem>
                     </Col>
