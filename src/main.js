@@ -108,7 +108,7 @@ class Main extends React.Component {
                             {
                                 this.componentArr.map(function(cur,index,arr){
                                     let component = _target.setRoute[cur.component];
-                                    return <Route key={index} path={cur.path} component={component} onEnter/>
+                                    return <Route key={index} path={cur.path} component={component} />
                                 })
                             }
                         </Content>
