@@ -53,14 +53,14 @@ class Login extends React.Component {
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <FormItem>
                         {getFieldDecorator('userName', {
-                            rules: [{ required: true, message: '请输入账号!' }],
+                            rules: [{ required: true, message: '请输入账号!', whitespace: true }],
                         })(
                             <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入账号!" />
                         )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('password', {
-                            rules: [{ required: true, message: '请输入密码!' }],
+                            rules: [{ required: true, message: '请输入密码!', whitespace: true }],
                         })(
                             <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码!" />
                         )}

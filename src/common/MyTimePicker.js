@@ -226,8 +226,6 @@ class MyTimePicker extends React.Component {
 	// 已加载组件首次渲染完毕后，父组件更新state自动调用次方法重新传入props，接受值后刷新禁用值, 判断选中的值是否在禁用中存在
 	componentWillReceiveProps(nextProps){
 		let obj = this, getHour = obj.selectedHour, getMinute = obj.selectedMinute;
-		console.log(nextProps.disabledHours.indexOf(getHour));
-		console.log(nextProps.disabledMinutes.indexOf(getMinute));
 		if(nextProps.disabledHours.indexOf(getHour) === -1 && nextProps.disabledMinutes.indexOf(getMinute) === -1){
 			this.setState({ 
 				disabledHours: nextProps.disabledHours,

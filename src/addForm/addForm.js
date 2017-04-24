@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Form, DatePicker, Button, Input, Col, Select, Cascader, Radio, InputNumber  } from 'antd';
+import { Form, DatePicker, Button, Input, Col, Select, Cascader, Radio, InputNumber, Switch, Tabs  } from 'antd';
 import moment from 'moment';
 
 import MyTimePicker from '../common/MyTimePicker.js'
@@ -10,6 +10,8 @@ const MonthPicker = DatePicker.MonthPicker;
 const RangePicker = DatePicker.RangePicker;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
+const TabPane = Tabs.TabPane;
+// const { MonthPicker, RangePicker } = DatePicker;
 
 const options = [{
     value: '广东省',
@@ -68,6 +70,7 @@ class TimeRelatedForm extends React.Component {
         disabledStartMinutes: [], // 需要禁用的开始分钟对象包括，禁用开始小时、开始分钟数组
         disabledEndHours: [], // 需要禁用的结束时间数组
         disabledEndMinutes: [], // 需要禁用的结束分钟对象包括，禁用结束小时、结束分钟数组
+        money: 100,
     }
     /*
      * 参数说明：hour -> 回调小时，minute -> 回调分钟
@@ -158,7 +161,7 @@ class TimeRelatedForm extends React.Component {
         });
     }
     changeMoney = (value) => {
-        console.log('changed', value);
+        console.log(value);
     }
 	render() {
     	const { getFieldDecorator } = this.props.form;
@@ -207,11 +210,24 @@ class TimeRelatedForm extends React.Component {
                         <Radio value={2}>女</Radio>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label="性别："  {...formItemLayout} >
-                    <InputNumber min={0} max={10} step={0.1} onChange={this.changeMoney} />
+                <FormItem label="金额："  {...formItemLayout} >
+                    <InputNumber min={0} step={0.01} defaultValue={this.state.money} />
                 </FormItem>
-        		<FormItem wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 }, }}>
-          			<Button type="primary" htmlType="submit" size="large">Submit</Button>
+                <FormItem label="状态："  {...formItemLayout} >
+                    <Switch defaultChecked={false} />
+                </FormItem>
+                <FormItem label="状态："  {...formItemLayout} >
+                    <Tabs type="card">
+                        <TabPane tab="Tab 231" key="1">Content of Tab Pane 1</TabPane>
+                        <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
+                        <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
+                    </Tabs>
+                </FormItem>
+                <FormItem label="状态："  {...formItemLayout} >
+                    <DatePicker.RangePicker />
+                </FormItem>
+        		<FormItem wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } }}>
+          			<Button type="primary" htmlType="submit" size="large">保存</Button>
         		</FormItem>
       		</Form>
     	);

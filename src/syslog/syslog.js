@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 //引入react-router
 import {Route, Link } from 'react-router-dom'
 
-import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal } from 'antd';
+import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal, Popconfirm, message } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -31,27 +31,39 @@ class Syslog extends React.Component{
 			visible: false
 		}
 	}
+	confirm = (e) => {
+	  console.log(e);
+	  message.success('删除成功！');
+	}
+
+	cancel = (e) => {
+	  console.log(e);
+	  // message.error('删除失败！');
+	}
 	getColumns = () => {
 		let obj = this;
 		return [{
-			title: 'Name',
+			title: '姓名',
 			dataIndex: 'name',
 			width: 150
 		}, {
-			title: 'Age',
+			title: '年龄',
 			dataIndex: 'age',
 			width: 150
 		}, {
-			title: 'Address',
+			title: '地址',
 			dataIndex: 'address'
 		},{
-		    title: 'Action',
+		    title: '操作',
 		    key: 'operation',
-		    width: 100,
+		    width: 200,
 		    render(event){
 		    	return(
 			    	<div>
-			    		<Button type="primary" onClick={obj.showModal.bind(obj,event)}><Icon type="search" />查看</Button>
+						<Button type="primary" onClick={obj.showModal.bind(obj,event)}><Icon type="search" />查看</Button>
+			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm} onCancel={obj.cancel} okText="确定" cancelText="放弃">
+							<Button type="primary"><Icon type="close" />删除</Button>
+						</Popconfirm>
 			    	</div>
 		    	)
 			}
