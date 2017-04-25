@@ -1,13 +1,11 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var WebpackDevServer = require('webpack-dev-server');
 
 module.exports = {
 	entry: {
 		bundle: ['./src/index.js', './src/css/common.css'],
-		vendor: ['react', 'react-dom', 'react-router', 'react-router-dom', 'antd', 'moment']
+		vendor: ['react', 'react-dom', 'react-router', 'react-router-dom', 'antd']
 	},
 	output: {
 		filename: '[name].js',
@@ -34,19 +32,12 @@ module.exports = {
 	        	fallback: "style-loader",
 	          	use: "css-loader"
 	        })
-	    }, {
-　　　　　　test: /\.(png|jpg)$/,
-　　　　　　loader: 'url-loader?limit=8192&name=./src/img/[name].[ext]'
-　　　  }]
+	    }]
 	},
 	plugins: [
 		new webpack.optimize.CommonsChunkPlugin({
             names: ['vendor']
         }),
 	    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
-	    new HtmlWebpackPlugin({
-            title: '后台管理系统',
-            template: './src/index.html'
-        })
 	]
 }

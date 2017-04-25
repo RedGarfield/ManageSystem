@@ -6,7 +6,6 @@ import { Form, Icon, Input, Button, Checkbox, Spin, Modal } from 'antd';
 
 const FormItem = Form.Item;
 
-
 class Login extends React.Component {
     constructor(props){
         super(props);
@@ -48,33 +47,36 @@ class Login extends React.Component {
     }
     render() {
         const { getFieldDecorator } = this.props.form;
+        const isLogin = true;
         return (
             <Spin spinning={this.state.loading} tip="正在登录...">
-                <Form onSubmit={this.handleSubmit} className="login-form">
-                    <FormItem>
-                        {getFieldDecorator('userName', {
-                            rules: [{ required: true, message: '请输入账号!', whitespace: true }],
-                        })(
-                            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入账号!" />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('password', {
-                            rules: [{ required: true, message: '请输入密码!', whitespace: true }],
-                        })(
-                            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码!" />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('remember', {
-                            valuePropName: 'checked',
-                            initialValue: true,
-                        })(
-                            <Checkbox>记住密码</Checkbox>
-                        )}
-                        <Button type="primary" htmlType="submit" className="login-form-button">登录</Button>
-                    </FormItem>
-                </Form>
+                <div className="login-wrap">
+                    <Form onSubmit={this.handleSubmit} className="login-form">
+                        <FormItem>
+                            {getFieldDecorator('userName', {
+                                rules: [{ required: true, message: '请输入账号!', whitespace: true }],
+                            })(
+                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入账号!" />
+                            )}
+                        </FormItem>
+                        <FormItem>
+                            {getFieldDecorator('password', {
+                                rules: [{ required: true, message: '请输入密码!', whitespace: true }],
+                            })(
+                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码!" />
+                            )}
+                        </FormItem>
+                        <FormItem>
+                            {getFieldDecorator('remember', {
+                                valuePropName: 'checked',
+                                initialValue: isLogin,
+                            })(
+                                <Checkbox>记住密码</Checkbox>
+                            )}
+                            <Button type="primary" htmlType="submit" className="login-form-button">登录</Button>
+                        </FormItem>
+                    </Form>
+                </div>
             </Spin>
         );
     }

@@ -29,6 +29,13 @@ app.get('/main/addForm', function(req,res){ // 回到首页
     res.render("index");
 });
 
+app.get('/main/modifyPwd', function(req,res){ // 修改密码
+    res.render("index");
+});
+app.get('/main/menuManage', function(req,res){ // 菜单管理
+    res.render("index");
+});
+
 /*
  * 接受前端请求
  */
@@ -46,19 +53,29 @@ app.post('/login', function(req,res){ // 登录请求
 
 app.post('/menuList',function(req,res){ // 查询菜单
     res.json({"isLogin":true, "list":[{
-            title: '日志管理',
+            title: '系统管理',
             path: '',
             component:'',
+            icon: 'tool', 
             children:[{
-                title: '日志查询',
-                path: '/main/syslog',
-                component: 'syslog',
+                title: '菜单管理',
+                path: '/main/menuManage',
+                component: 'menuManage',
+                icon: 'right-circle',
+                children:[]
+            }, {
+                title: '角色管理',
+                path: '/main/roleManage',
+                component: 'roleManage',
+                icon: 'right-circle',
+                children:[]
+            }, {
+                title: '用户管理',
+                path: '/main/userManage',
+                component: 'userManage',
+                icon: 'right-circle',
                 children:[]
             }]
-        },{
-            title: '新增表单',
-            path: '/main/addForm',
-            component: 'addForm'
         }]
     })
 });

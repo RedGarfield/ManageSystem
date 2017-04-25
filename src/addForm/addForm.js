@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Form, DatePicker, Button, Input, Col, Select, Cascader, Radio, InputNumber, Switch, Tabs  } from 'antd';
-import moment from 'moment';
 
 import MyTimePicker from '../common/MyTimePicker.js'
 
@@ -232,11 +231,6 @@ class TimeRelatedForm extends React.Component {
       		</Form>
     	);
   	}
-}
-
-TimeRelatedForm.propTypes = {
-    starttime: moment({hour: 0, minute: 0}),
-    endtime: moment({hour: 23, minute: 59})
 }
 
 const AddForm = Form.create()(TimeRelatedForm);

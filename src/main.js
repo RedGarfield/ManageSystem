@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { Route, Link, Redirect } from 'react-router-dom'; // 引入react-router
 import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
-import Syslog from './syslog/syslog.js';
-import AddForm from './addForm/AddForm.js';
+import ModifyPwd from './modifyPwd/ModifyPwd.js';
+import MenuManage from './menuManage/menuManage.js';
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -21,8 +21,10 @@ class Main extends React.Component {
         }
     }
     setRoute = { // 组件菜单映射
-        'syslog': Syslog,
-        'addForm': AddForm
+        'modifyPwd': ModifyPwd, // 修改密码 
+        'menuManage': MenuManage, // 菜单管理
+        /*'roleManage': RoleManage, // 角色管理
+        'userManage': UserManage, // 用户管理*/
     }
     onCollapse = (collapsed) => {
         this.setState({
@@ -56,7 +58,8 @@ class Main extends React.Component {
     }
     dropdownMenu(){ // 用户信息下拉菜单
         return <Menu onClick={this.onLoginOut.bind(this)}>
-            <Menu.Item key="loginout">退出账号</Menu.Item>
+            <Menu.Item key="modifyPwd"><Link to="/main/modifyPwd">修改密码</Link></Menu.Item>
+            <Menu.Item key="loginOut">退出账号</Menu.Item>
         </Menu>
     }
     setMenu(obj){ // 设置侧边栏菜单
@@ -71,16 +74,16 @@ class Main extends React.Component {
                             sonMenuArr.push(setSon(sonMenu.children[j]));
                         }else{ // 没有再次包含子菜单就直接设置
                             _self.componentArr.push({path:sonMenu.children[j].path,component:sonMenu.children[j].component}); // 获取菜单数据的路径和组件
-                            sonMenuArr.push(<Menu.Item key={sonMenu.children[j].title}><Link to={sonMenu.children[j].path}><Icon type="user" />{sonMenu.children[j].title}</Link></Menu.Item>);
+                            sonMenuArr.push(<Menu.Item key={sonMenu.children[j].title}><Link to={sonMenu.children[j].path}><Icon type={sonMenu.children[j].icon} />{sonMenu.children[j].title}</Link></Menu.Item>);
                         }
                     }
                     // 返回该层级的顶层子菜单
-                    return <SubMenu key={sonMenu.title} title={<span><Icon type="user" /><span className="nav-text">{sonMenu.title}</span></span>} >{sonMenuArr}</SubMenu>
+                    return <SubMenu key={sonMenu.title} title={<span><Icon type={sonMenu.icon} /><span className="nav-text">{sonMenu.title}</span></span>} >{sonMenuArr}</SubMenu>
                 })(obj[i]);
                 arr.push(templeMenu);
             }else{ // 没有子菜单
                 _self.componentArr.push({path:obj[i].path,component:obj[i].component}); // 获取菜单数据的路径和组件
-                arr.push(<Menu.Item key={obj[i].title}><Link to={obj[i].path}><Icon type="user" />{obj[i].title}</Link></Menu.Item>);
+                arr.push(<Menu.Item key={obj[i].title}><Link to={obj[i].path}><Icon type={obj[i].icon} />{obj[i].title}</Link></Menu.Item>);
             }
         }
         return arr;
@@ -92,7 +95,7 @@ class Main extends React.Component {
             <Layout>
                 <Header>
                     <div className="top-logo1">
-                        <img src="img/logo.png" alt="logo" />
+                        <img src="/img/logo.png" alt="logo" />
                     </div>
                     <Dropdown overlay={dropdownMenu}>
                         <a className="ant-dropdown-link" href="javascript:void(0);">欢迎您，{this.state.userName} <Icon type="down" /></a>
@@ -104,7 +107,8 @@ class Main extends React.Component {
                     </Sider>
                     <Layout style={{ background: '#f1f3f6' }}>
                         <Content style={{ padding: "10px 24px", margin: 0 }}>
-                            <Redirect to="/main/addForm"/>
+                            <Redirect to="/main/modifyPwd"/>
+                            <Route path="/main/modifyPwd" component={ModifyPwd} />
                             {
                                 this.componentArr.map(function(cur,index,arr){
                                     let component = _target.setRoute[cur.component];
