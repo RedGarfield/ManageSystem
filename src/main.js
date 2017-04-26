@@ -5,6 +5,8 @@ import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
 import ModifyPwd from './modifyPwd/ModifyPwd.js';
 import MenuManage from './menuManage/menuManage.js';
+import RoleManage from './roleManage/RoleManage.js';
+import UserManage from './userManage/UserManage.js';
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -23,8 +25,8 @@ class Main extends React.Component {
     setRoute = { // 组件菜单映射
         'modifyPwd': ModifyPwd, // 修改密码 
         'menuManage': MenuManage, // 菜单管理
-        /*'roleManage': RoleManage, // 角色管理
-        'userManage': UserManage, // 用户管理*/
+        'roleManage': RoleManage, // 角色管理
+        'userManage': UserManage, // 用户管理
     }
     onCollapse = (collapsed) => {
         this.setState({

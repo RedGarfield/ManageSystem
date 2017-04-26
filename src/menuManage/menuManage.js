@@ -94,11 +94,12 @@ class MenuManage extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-						    <h2>系统管理</h2>
+						    <h2>菜单列表</h2>
 	                        <Breadcrumb style={{ textAlign: 'right' }}>
 	                            <Breadcrumb.Item>首页</Breadcrumb.Item>
 	                            <Breadcrumb.Item>系统管理</Breadcrumb.Item>
 	                            <Breadcrumb.Item>菜单管理</Breadcrumb.Item>
+	                            <Breadcrumb.Item>菜单列表</Breadcrumb.Item>
 	                        </Breadcrumb>
 						</Card>
 					</Col>
@@ -106,7 +107,7 @@ class MenuManage extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-							
+							<Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加顶级菜单</Button>
 						</Card>
 					</Col>
 				</Row>

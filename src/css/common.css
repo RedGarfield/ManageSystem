@@ -6,8 +6,10 @@ overflow-x: hidden;}
 /*************************** 按钮 ***************************/
 .ant-btn{margin: 3px 5px;}
 .searchForm .ant-btn{margin: 0;}
+
 /*************************** 遮罩层 ***************************/
 .ant-spin-container{height: 100%;}
+
 /*************************** 自定义时间选择器 ***************************/
 .my-TimePicker-wrapper{width: 100%;position: relative;}
 /* 选择器输入框 */
@@ -23,7 +25,6 @@ height: 0;content: " ";display: table;}
 /* ul时间容器 */
 .my-TimePicker-content-box .my-TimePicker-content-menu{box-sizing: border-box;width: 100%;font-size: 12px;box-sizing: border-box;
 overflow: hidden;border-left: 1px solid #e9e9e9;padding-bottom: 112px;}
-
 /* 时间选择选中与禁止 */
 .my-TimePicker-content-menu > li.my-TimePicker-time-selected{background: #d8d8d8;font-weight: 700;}
 .my-TimePicker-content-menu > li.my-TimePicker-time-selected-disabled:hover{cursor: not-allowed;background: #fff}
@@ -33,16 +34,20 @@ overflow: hidden;border-left: 1px solid #e9e9e9;padding-bottom: 112px;}
 line-height: 28px;text-align: left;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;
 user-select: none;-webkit-transition: background .3s ease;transition: background .3s ease;}
 .my-TimePicker-content-menu > li:hover{cursor: pointer;background-color: #c0e5ff;}
+
 /*************************** 加载旋转框 ***************************/
 .ant-spin-nested-loading > div > .ant-spin{position: absolute;height: 100%;width: 100%;z-index: 4;max-height: 100%;}
+
 /*************************** 登录样式 ***************************/
 .login-wrap{width: 100%;height: 100%;background-image: url('/img/logo-bk.jpg');background-size:cover; background-repeat: no-repeat;}
 .login-form {width: 20em;height: 17em;position: absolute;top: 30%;right: 8em;padding: 1.8em 1.5em 0 1.5em;
 background-color: rgba(0,0,0,.1);box-shadow: 10px 10px 20px #0ff;border-radius: 5px;}
 .login-form-forgot {float: right;}
 .login-form-button {width: 100%;}
+
 /*************************** 主体布局样式 ***************************/
 #react-content > div, #react-content > div > div{height: 100%;overflow-x: hidden;overflow-y: auto;}
+
 /*************************** 头部样式 ***************************/
 .ant-layout-header{padding: 0 24px;color:#000;}
 /* 顶部菜单logo样式 */
@@ -50,14 +55,19 @@ background-color: rgba(0,0,0,.1);box-shadow: 10px 10px 20px #0ff;border-radius: 
 .top-logo1 > img{margin: 3px auto;}
 /* 用户下拉菜单信息 */
 .ant-dropdown-link, .ant-dropdown-trigger{color: #fff;float: right;}
+
 /*************************** 侧边栏样式 ***************************/
 .ant-layout-sider-zero-width-trigger{width: 20px;right: -20px;}
+
 /*************************** 内容栏样式 ***************************/
 /* 卡片容器 */
 .panel{width: 100%;}
 .panel > .ant-row{margin-bottom: 10px;}
 .panel .ant-row .ant-card-body{padding: 10px;}
-/* 卡片容器面包屑导航 */
+.ant-card-body::after{content: " ";clear:both; height:0; font-size:0; display: block; overflow:hidden;}
+/* 卡片容器的右浮动按钮 */
+.ant-card-body .ant-card-rightBtn{float: right;}
+/* 卡片容器的面包屑导航 */
 .ant-card-body .ant-breadcrumb{margin: 10px 0;}
 /*************************** 底部栏样式 ***************************/
 .ant-layout-footer{padding: 10px 24px;color: #000;}

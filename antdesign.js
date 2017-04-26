@@ -21,18 +21,16 @@ app.get('/', function(req,res){ // 回到首页
     res.render("index");
 });
 
-app.get('/main/syslog', function(req,res){ // 回到首页
-    res.render("index");
-});
-
-app.get('/main/addForm', function(req,res){ // 回到首页
-    res.render("index");
-});
-
 app.get('/main/modifyPwd', function(req,res){ // 修改密码
     res.render("index");
 });
 app.get('/main/menuManage', function(req,res){ // 菜单管理
+    res.render("index");
+});
+app.get('/main/roleManage', function(req,res){ // 角色管理
+    res.render("index");
+});
+app.get('/main/userManage', function(req,res){ // 用户管理
     res.render("index");
 });
 
@@ -73,6 +71,18 @@ app.post('/menuList',function(req,res){ // 查询菜单
                 title: '用户管理',
                 path: '/main/userManage',
                 component: 'userManage',
+                icon: 'right-circle',
+                children:[]
+            }]
+        },{
+            title: '系统管理',
+            path: '',
+            component:'',
+            icon: 'cloud', 
+            children:[{
+                title: '日志查询',
+                path: '/main/syslogQuery',
+                component: 'menuManage',
                 icon: 'right-circle',
                 children:[]
             }]
