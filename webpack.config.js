@@ -12,12 +12,6 @@ module.exports = {
 		path: path.resolve(__dirname,'./dist/'),
 		publicPath: "/"
 	},
-	devServer:{
-		historyApiFallback:true,
-		hot:true,
-		inline:true,
-		progress:true,//报错无法识别，删除后也能正常刷新
-	},
 	module: {
 	    rules: [{
 	      	test: /\.(js|jsx)$/,        //文件后缀、类型      

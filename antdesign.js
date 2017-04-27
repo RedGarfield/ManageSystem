@@ -33,6 +33,9 @@ app.get('/main/roleManage', function(req,res){ // 角色管理
 app.get('/main/userManage', function(req,res){ // 用户管理
     res.render("index");
 });
+app.get('/main/userAdd', function(req,res){ // 新增用户
+    res.render("index");
+});
 
 /*
  * 接受前端请求
@@ -74,18 +77,18 @@ app.post('/menuList',function(req,res){ // 查询菜单
                 icon: 'right-circle',
                 children:[]
             }]
-        },{
-            title: '系统管理',
+        }, {
+            title: '日志管理',
             path: '',
             component:'',
             icon: 'cloud', 
-            children:[{
-                title: '日志查询',
-                path: '/main/syslogQuery',
-                component: 'menuManage',
-                icon: 'right-circle',
-                children:[]
-            }]
+            children:[]
+        }], 
+        "contentList":[{
+            title: '新增用户',
+            path: '/main/userAdd',
+            component: 'userAdd',
+            icon: 'right-circle',
         }]
     })
 });

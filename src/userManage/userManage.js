@@ -125,7 +125,7 @@ class RoleManage extends React.Component{
 							    </Form>
 							</Col>
 							<Col span={12}>
-								<Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加用户</Button>
+								<Link to="/main/userAdd"><Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加用户</Button></Link>
 							</Col>
 						</Card>
 					</Col>

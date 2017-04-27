@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import { Route, Link, Redirect } from 'react-router-dom'; // 引入react-router
 import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
-import ModifyPwd from './modifyPwd/ModifyPwd.js';
+import ModifyPwd from './modifyPwd/modifyPwd.js';
 import MenuManage from './menuManage/menuManage.js';
-import RoleManage from './roleManage/RoleManage.js';
-import UserManage from './userManage/UserManage.js';
+import RoleManage from './roleManage/roleManage.js';
+import UserManage from './userManage/userManage.js';
+import UserAdd from './userManage/userAdd.js';
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -15,11 +16,12 @@ class Main extends React.Component {
     constructor(props){
         super(props);
         this.componentArr = [];
+        this.contentArr = [];
         this.state = {
             collapsed: false,
             mode: 'inline',
             userName: 'lxy',
-            menuArr: []
+            menuArr: [],
         }
     }
     setRoute = { // 组件菜单映射
@@ -27,6 +29,7 @@ class Main extends React.Component {
         'menuManage': MenuManage, // 菜单管理
         'roleManage': RoleManage, // 角色管理
         'userManage': UserManage, // 用户管理
+        'userAdd': UserAdd, // 用户新增
     }
     onCollapse = (collapsed) => {
         this.setState({
@@ -34,7 +37,7 @@ class Main extends React.Component {
             mode: collapsed ? 'vertical' : 'inline',
         });
     }
-    componentDidMount(){ // 组件加载完毕后，请求菜单
+    componentWillMount(){ // 组件加载前发出请求
         let self = this;
         fetch(__dirname+"menuList",{
             method: "post"
@@ -44,6 +47,7 @@ class Main extends React.Component {
             });
         }).then(function(data){
             if(data.isLogin === true){ // 如果验证用户信息正确，就跳转到主页面，并且加载菜单
+                self.contentArr = data.contentList;
                 self.setState({"menuArr": self.setMenu(data.list)});
             }else{
                 self.props.history.push("/"); // 未登录跳转登录
@@ -66,7 +70,6 @@ class Main extends React.Component {
     }
     setMenu(obj){ // 设置侧边栏菜单
         let arr = [], _self = this;
-        _self.componentArr.length = 0; // 由于setState会导致render重绘，所以需要将构造器中动态改变的值重置
         for(let i = 0, len = obj.length; i < len; i++){ // 循环遍历菜单
             if(obj[i].children && obj[i].children.length > 0){ // 如果有子菜单
                 let templeMenu = (function setSon(sonMenu){ // 菜单递归函数
@@ -113,6 +116,12 @@ class Main extends React.Component {
                             <Route path="/main/modifyPwd" component={ModifyPwd} />
                             {
                                 this.componentArr.map(function(cur,index,arr){
+                                    let component = _target.setRoute[cur.component];
+                                    return <Route key={index} path={cur.path} component={component} />
+                                })
+                            }
+                            {
+                                this.contentArr.map(function(cur,index,arr){
                                     let component = _target.setRoute[cur.component];
                                     return <Route key={index} path={cur.path} component={component} />
                                 })
