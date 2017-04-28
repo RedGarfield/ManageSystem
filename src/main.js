@@ -112,7 +112,7 @@ class Main extends React.Component {
                     </Sider>
                     <Layout style={{ background: '#f1f3f6' }}>
                         <Content style={{ padding: "10px 24px", margin: 0 }}>
-                            <Redirect to="/main/modifyPwd"/>
+                            <Redirect to="/main/modifyPwd" />
                             <Route path="/main/modifyPwd" component={ModifyPwd} />
                             {
                                 this.componentArr.map(function(cur,index,arr){

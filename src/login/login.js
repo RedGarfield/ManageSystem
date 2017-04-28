@@ -68,8 +68,7 @@ class Login extends React.Component {
                         </FormItem>
                         <FormItem>
                             {getFieldDecorator('remember', {
-                                valuePropName: 'checked',
-                                initialValue: isLogin,
+                                valuePropName: 'checked', initialValue: isLogin,
                             })(
                                 <Checkbox>记住密码</Checkbox>
                             )}

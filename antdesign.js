@@ -17,10 +17,9 @@ app.use(require('body-parser')()); // body中间件解析post请求
 /*
  * 配置所有的路由，全部转到index
  */
-app.get('/', function(req,res){ // 回到首页
+app.get('/', function(req,res){ // 登录首页
     res.render("index");
 });
-
 app.get('/main/modifyPwd', function(req,res){ // 修改密码
     res.render("index");
 });
@@ -34,6 +33,9 @@ app.get('/main/userManage', function(req,res){ // 用户管理
     res.render("index");
 });
 app.get('/main/userAdd', function(req,res){ // 新增用户
+    res.render("index");
+});
+app.get('/*', function(req,res){ // 匹配任何访问地址
     res.render("index");
 });
 
@@ -53,7 +55,7 @@ app.post('/login', function(req,res){ // 登录请求
 });
 
 app.post('/menuList',function(req,res){ // 查询菜单
-    res.json({"isLogin":true, "list":[{
+    res.json({"isLogin":false, "list":[{
             title: '系统管理',
             path: '',
             component:'',
