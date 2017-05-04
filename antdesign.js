@@ -3,9 +3,11 @@ var path = require("path");
 var express = require("express");
 var app = new express();
 
-var handlebars = require("express-handlebars").create({
+var handlebars = require("express-handlebars").create({ // 引入模板
     defaultLayout: "index"
 });
+var jqupload = require('jquery-file-upload-middleware'); // jq文件上传中间件
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -13,6 +15,27 @@ app.set('port', process.env.PORT || 3000); // 设置服务器端口
 
 app.use(express.static('dist')); // 托管静态文件
 app.use(require('body-parser')()); // body中间件解析post请求
+
+// 配置文件／图片上传的存放的文件夹和路径地址
+jqupload.configure({
+    uploadDir: __dirname + '/uploads',
+    uploadUrl: '/upload'
+});
+
+/*
+ * 文件上传
+ */
+app.use('/upload/userPhoto', function(req, res, next){
+    jqupload.fileHandler({
+        uploadDir: function () {
+            return __dirname + '/uploads/'
+        },
+        uploadUrl: function () {
+            return '/upload/userPhoto'
+        }
+    })(req, res, next);
+});
+
 
 /*
  * 配置所有的路由，全部转到index
@@ -42,7 +65,7 @@ app.get('/*', function(req,res){ // 匹配任何访问地址
 /*
  * 接受前端请求
  */
-app.post('/login', function(req,res){ // 登录请求
+app.post('/login', (req,res) => { // 登录请求
     if(req.query.length !== 0){
         if(req.query.username === "admin" && req.query.password === "111111"){
             res.json({"success":true,"message":"登录成功..."});
@@ -54,8 +77,8 @@ app.post('/login', function(req,res){ // 登录请求
     }
 });
 
-app.post('/menuList',function(req,res){ // 查询菜单
-    res.json({"isLogin":false, "list":[{
+app.post('/menuList', (req,res) => { // 查询菜单
+    res.json({"isLogin":true, "list":[{
             title: '系统管理',
             path: '',
             component:'',
@@ -95,7 +118,7 @@ app.post('/menuList',function(req,res){ // 查询菜单
     })
 });
 
-app.post('/query/sysLogList', function(req,res){ // 查询日志列表
+app.post('/query/sysLogList', (req,res) => { // 查询日志列表
     res.json({"isLogin":true, "list":[{"key":"M001", "name":"lxy", "age":23, "address":"广东省广州市天河区"},
         {"key":"M002", "name":"lxy", "age":22, "address":"广东省广州市黄埔区"},
         {"key":"M003", "name":"lxy", "age":21, "address":"广东省广州市越秀区"},

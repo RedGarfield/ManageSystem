@@ -1,27 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Router, Route} from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 
-import LoginForm from './login/login.js';
-// import Main from './main.js';
-// import NotFoundPage from './notFoundPage.js';
+import LoginPage from './login/login.js';
+import MainPage from './main/main.js';
+import NotFoundPage from './notFoundPage.js';
 
-let store = createStore();
 const history = createBrowserHistory();
 
-const DefaultLayout = () => (
-	<Provider>
-		<Router history={history}>
-			<div>
-		  		<Route exact path="/" component={LoginForm}/>
-			</div>
-		</Router>
-	</Provider>
+const Root = () => (
+	<Router history={history}>
+		<Switch>
+	  		<Route exact path="/" component={LoginPage} />
+	  		<Route path="/main" component={MainPage} />
+	  		<Route component={NotFoundPage} />
+  		</Switch>
+	</Router>
 )
 
 ReactDOM.render(
-    <DefaultLayout />, document.getElementById("react-content")
+    <Root />, document.getElementById("react-content")
 )

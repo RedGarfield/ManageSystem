@@ -46,7 +46,7 @@ background-color: rgba(0,0,0,.1);box-shadow: 10px 10px 20px #0ff;border-radius: 
 .login-form-button {width: 100%;}
 
 /*************************** 主体布局样式 ***************************/
-#react-content > div, #react-content > div > div{height: 100%;overflow-x: hidden;overflow-y: auto;}
+#react-content > div{height: 100%;overflow-x: hidden;overflow-y: auto;}
 
 /*************************** 头部样式 ***************************/
 .ant-layout-header{padding: 0 24px;color:#000;}
@@ -69,6 +69,9 @@ background-color: rgba(0,0,0,.1);box-shadow: 10px 10px 20px #0ff;border-radius: 
 .ant-card-body .ant-card-rightBtn{float: right;}
 /* 卡片容器的面包屑导航 */
 .ant-card-body .ant-breadcrumb{margin: 10px 0;}
+/* table无内容时图标样式 */
+.ant-card-body .ant-table-placeholder>span{font-size: 1.1rem;}
+
 /*************************** 底部栏样式 ***************************/
 .ant-layout-footer{padding: 10px 24px;color: #000;}
 
@@ -78,3 +81,263 @@ background-color: rgba(0,0,0,.1);box-shadow: 10px 10px 20px #0ff;border-radius: 
 .avatar-uploader, .avatar-uploader-trigger, .avatar { width: 150px; height: 150px; }
 .avatar-uploader { display: block; border: 1px dashed #d9d9d9; border-radius: 6px; cursor: pointer; }
 .avatar-uploader-trigger { display: table-cell; vertical-align: middle; font-size: 28px; color: #999; }
+
+
+/*活动页*/
+.Activity{
+	width: 100%;
+}
+.ActivityMain{
+	width: 1200px;
+	height: 967px;
+	background-color: blue;
+	margin: 0 auto;
+}
+.ActivityInfo{
+	width: 300px;
+	height: 643px;
+	background-color: #fff;
+	border: 1px solid #fff;
+}
+.ActivityInfoTopPic{
+	margin-top: 20px;
+}
+.ActivityInfoTopPic a{
+	margin-right: 18px;
+}
+.ActivityInfoTopPic a span{
+	margin-left: 10px;
+	color: orange;
+}
+.ActivityInfoTopBtn{
+	width: 200px;
+	height: 36px;
+	border: 1px solid #edebea;
+	border-radius: 8px;
+	position: relative;
+}
+.ActivityInfoTopBtn button{
+	width: 198px;
+	height: 34px;
+	border: none;
+	outline: none;
+	text-align: center;
+	line-height: 36px;
+	border-radius: 8px;
+	background-color: #fff;
+	cursor: pointer;
+}
+.RewardResultBtn{
+	width: 200px;
+	height: 36px;
+}
+.ActivityInfoTopBtn em{
+	margin: -25px 0 0 165px;
+	cursor: pointer;
+}
+.ActivityInfoMain{
+	width: 298px;
+	height: 530px;
+	margin-top: 10px;
+	background-color: #e9e6e6;
+	border-radius: 8px;
+	padding: 10px 10px 0 10px;
+}
+.BigTitle{
+	font-size: 18px;
+	color: #b00a0a;
+}
+.ActivityInfoMain li:nth-of-type(4),
+.ActivityInfoMain li:nth-of-type(5){
+	margin-top: 5px;
+}
+.ActivityInfoMainText p{
+	text-indent: 1em;
+}
+
+/*设置点击签到的弹窗*/
+.CheckInRoom{
+	width: 545px;
+	height: 281px;
+	border: 1px solid #f8b052;
+	background-color: #fffffe;
+	position: absolute;
+	z-index: 3;
+	top: 61px;
+	border-radius: 8px;
+}
+.CheckInRoomCenter{
+	width: 520px;
+	height: 270px;
+	border: 1px solid #f8b052;
+	border-radius: 8px;
+	background-color: #ffdabd;
+	margin: 9px auto;
+}
+.RoomCenterBtn{
+	width: 100%;
+}
+/*在上面设计了一个签到按钮*/
+/*.RoomCenterBtn>div{
+	width: 116px;
+	height: 33px;
+	border: 1px solid #f8b052;
+	margin: 0 auto;
+	border-radius: 8px;
+}*/
+.RoomCenterBtn p{
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 11px;
+	right: 13px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.RoomCenterBtn p .anticon{
+	font-size: 30px;
+	color: #fda026;
+}
+.RoomCenterBtn>div button{
+	width: 114px;
+	height: 31px;
+	border: none;
+	outline: none;
+	line-height: 31px;
+	background-color: #ffecdc;
+	border-radius: 8px;
+	font-size: 16px;
+	color: #fda026;
+	cursor: pointer;
+}
+/*弹窗7天的签到的设置*/
+.RoomCenterMain{
+	width: 518px;
+	height: 235px;
+	border-radius: 8px;
+	margin-top: 32px;
+}
+.RoomCenterMainUl{
+	width: 518px;
+	height: 235px;
+}
+.RoomCenterMainUl li{
+	width: 95px;
+	height: 77px;
+	background-color: #fff5ec;
+	margin: 10px 0 0 30px;
+	border: 1px solid #febe75;
+	border-radius: 8px;
+}
+.RoomCenterMainUl li:nth-of-type(5),
+.RoomCenterMainUl li:nth-of-type(6),
+.RoomCenterMainUl li:nth-of-type(7),
+.RoomCenterMainUl li:nth-of-type(8){
+	margin-top: 30px;
+}
+.RoomCenterMainUl li:nth-of-type(8),
+.RoomCenterMainUl li:nth-of-type(8) b{
+	border: none;
+}
+.RoomCenterMainUl li b{
+	width: 80px;
+	height: 66px;
+	background-color: #fff5ec;
+	border: 1px solid #febe75;
+	border-radius: 8px;
+	margin: 0 auto;
+	position: relative;
+}
+.showBoxFirst{
+	color: #18f928;
+	font-size: 29px;
+	position: absolute;
+	top: -19px;
+	left: -16px;
+}
+.showBox p{
+	position: absolute;
+	font-size: 14px;
+	top: -12px;
+	left: 22px;
+}
+.showBox span{
+	display: block;
+	margin-top: 12px;
+}
+.showBoxLast{
+	width: 31px;
+	height: 24px;
+	position: absolute;
+	top: 35px;
+	left: 24px;
+}
+.showBoxTime{
+	margin-bottom: 5px;
+}
+.showBoxCheck,
+.showBoxCheck button{
+	width: 60px;
+    height: 26px;
+    border-radius: 8px;
+    margin: 0 auto;
+    background-color: #fda026;
+}
+.showBoxCheck button{
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+/*中奖结果的弹窗设置*/
+.RewardResult{
+	width: 656px;
+	height: 163px;
+	background-color: #ffffff;
+	position: absolute;
+	top: 36px;
+	left: -2px;
+	border-radius: 8px;
+	border: 1px solid #edebea;
+}
+.RewardResult table{
+	width: 90%;
+	height: 90%;
+	font-size: 16px;
+	margin:10px 0 0 30px;
+}
+.RewardResult table thead{
+	font-weight: bold;
+}
+.RewardResult table tbody{
+	font-size: 14px;
+}
+.GetReward{
+	width: 57px;
+	height: 25px;
+	background-color: #fab950;
+	margin: 0 auto;
+	line-height: 25px;
+	color: #fff;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.RewardResultRem{
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	right: 3px;
+	top: 3px;
+}
+.RewardResultRem .anticon{
+	font-size: 25px;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+

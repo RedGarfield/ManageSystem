@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import { Route, Link, Redirect } from 'react-router-dom'; // 引入react-router
 import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
-import ModifyPwd from './modifyPwd/modifyPwd.js';
-import MenuManage from './menuManage/menuManage.js';
-import RoleManage from './roleManage/roleManage.js';
-import UserManage from './userManage/userManage.js';
-import UserAdd from './userManage/userAdd.js';
+import ModifyPwd from './../modifyPwd/modifyPwd.js';
+import MenuManage from './../menuManage/menuManage.js';
+import RoleManage from './../roleManage/roleManage.js';
+import UserManage from './../userManage/userManage.js';
+import UserAdd from './../userManage/userAdd.js';
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
-class Main extends React.Component {
+class MainPage extends React.Component {
     constructor(props){
         super(props);
         this.componentArr = [];
@@ -137,6 +137,6 @@ class Main extends React.Component {
     }
 }
 
-export default Main;
+export default MainPage;
 
 

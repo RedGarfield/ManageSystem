@@ -1,15 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Card, Row, Breadcrumb, Form, Button, Input, Col, Select, Switch, Upload, Icon } from 'antd';
+import { Card, Row, Breadcrumb, Form, Button, Input, Col, Select, Switch, Upload, Icon, Message } from 'antd';
 
 import MyTimePicker from '../common/MyTimePicker.js'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 
+function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+    let isImage = false;
+    switch(file.type){
+        case "image/jpeg":
+        case "image/png":
+        case "image/jpg":
+            isImage = true;
+            break;
+        default:
+            isImage = false;
+    }
+    if (!isImage) {
+        Message.error('只能上传图片!');
+        return false;
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        Message.error('图片必须小于2M!');
+        return false;
+    }
+    return isImage && isLt2M;
+}
+
 class UserAddForm extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            imageUrl: ""
+        }
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -19,11 +51,18 @@ class UserAddForm extends React.Component {
             }
         });
     }
+    handleChange = (info) => {
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+            getBase64(info.file.originFileObj, imageUrl => this.setState({ imageUrl }));
+        }
+    }
 	render() {
     	const { getFieldDecorator } = this.props.form;
+        const imageUrl = this.state.imageUrl;
     	const formItemLayout = {
       		labelCol: { xs: { span: 24 }, sm: { span: 2 }, },
-		    wrapperCol: { xs: { span: 24 }, m: { span: 22 }, },
+		    wrapperCol: { xs: { span: 24 }, sm: { span: 22 }, },
     	};
         const specialItemLayout = {
             labelCol: { xs: { span: 24 }, sm: { span: 6 }, },
@@ -32,6 +71,7 @@ class UserAddForm extends React.Component {
     	const config = {
       		rules: [{ type: 'object', required: true, message: '请选择时间!' }]
     	};
+        const _path = __dirname;
     	return (
             <div className="panel">
                 <Row>
@@ -54,10 +94,14 @@ class UserAddForm extends React.Component {
                                 <Row>
                                     <Col span={24}>
                                         <FormItem>
-                                            <Upload className="avatar-uploader" name="avatar" showUploadList={false} >
-                                            {
-                                                <Icon type="user" className="avatar-uploader-trigger" />
-                                            }
+                                            <Upload className="avatar-uploader" name="avatar"
+                                                showUploadList={false} action={ _path + 'upload/userPhoto' }
+                                                beforeUpload={beforeUpload} onChange={this.handleChange} >
+                                                {
+                                                  imageUrl ?
+                                                    <img src={imageUrl} alt="" className="avatar" /> :
+                                                    <Icon type="user" className="avatar-uploader-trigger" />
+                                                }
                                             </Upload>
                                         </FormItem>
                                     </Col>

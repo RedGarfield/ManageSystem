@@ -81,6 +81,6 @@ class Login extends React.Component {
     }
 }
 
-const LoginForm = Form.create()(Login);
+const LoginPage = Form.create()(Login);
 
-export default LoginForm;
+export default LoginPage;

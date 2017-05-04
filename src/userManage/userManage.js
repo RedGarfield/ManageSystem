@@ -32,18 +32,19 @@ class RoleManage extends React.Component{
 			width: 150
 		}, {
 			title: '登录名',
-			dataIndex: 'age',
+			dataIndex: 'username',
 			width: 150
 		}, {
 			title: '归属诊所',
-			dataIndex: 'address'
+			dataIndex: 'address',
+			width: 150
 		}, {
 			title: '角色',
-			dataIndex: 'age',
+			dataIndex: 'role',
 			width: 150
 		}, {
 			title: '是否可登录',
-			dataIndex: 'age',
+			dataIndex: 'islogin',
 			width: 150
 		}, {
 		    title: '操作',
