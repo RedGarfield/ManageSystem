@@ -7,7 +7,7 @@ import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal, Po
 
 const FormItem = Form.Item;
 
-class RoleManage extends React.Component{
+class RoleList extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -32,18 +32,19 @@ class RoleManage extends React.Component{
 			width: 150
 		}, {
 			title: '英文名称',
-			dataIndex: 'age',
+			dataIndex: 'ename',
 			width: 150
 		}, {
 			title: '数据范围',
-			dataIndex: 'address'
+			dataIndex: 'datarange',
+			width: 300
 		}, {
 			title: '是否启用',
-			dataIndex: 'age',
+			dataIndex: 'isopen',
 			width: 150
 		}, {
 			title: '备注信息',
-			dataIndex: 'age',
+			dataIndex: 'remark',
 			width: 150
 		}, {
 		    title: '操作',
@@ -133,4 +134,4 @@ class RoleManage extends React.Component{
 		)
 	}
 }
-export default RoleManage;
+export default RoleList;

@@ -94,7 +94,7 @@ class UserAddForm extends React.Component {
                                 <Row>
                                     <Col span={24}>
                                         <FormItem>
-                                            <Upload className="avatar-uploader" name="avatar"
+                                            <Upload className="avatar-uploader userIcon" name="avatar"
                                                 showUploadList={false} action={ _path + 'upload/userPhoto' }
                                                 beforeUpload={beforeUpload} onChange={this.handleChange} >
                                                 {

@@ -7,7 +7,7 @@ import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal, Po
 
 const FormItem = Form.Item;
 
-class RoleManage extends React.Component{
+class UserList extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -145,4 +145,4 @@ class RoleManage extends React.Component{
 		)
 	}
 }
-export default RoleManage;
+export default UserList;

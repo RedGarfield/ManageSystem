@@ -4,10 +4,12 @@ import { Route, Link, Redirect } from 'react-router-dom'; // 引入react-router
 import { Layout, Menu, Icon, Dropdown } from 'antd'; // 引入antd
 
 import ModifyPwd from './../modifyPwd/modifyPwd.js';
-import MenuManage from './../menuManage/menuManage.js';
-import RoleManage from './../roleManage/roleManage.js';
-import UserManage from './../userManage/userManage.js';
+import MenuList from './../menuManage/menuList.js';
+import RoleList from './../roleManage/roleList.js';
+import UserList from './../userManage/userList.js';
+
 import UserAdd from './../userManage/userAdd.js';
+import MenuTopAdd from './../menuManage/menuTopAdd.js'
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -26,10 +28,11 @@ class MainPage extends React.Component {
     }
     setRoute = { // 组件菜单映射
         'modifyPwd': ModifyPwd, // 修改密码 
-        'menuManage': MenuManage, // 菜单管理
-        'roleManage': RoleManage, // 角色管理
-        'userManage': UserManage, // 用户管理
+        'menuManage': MenuList, // 菜单管理
+        'roleManage': RoleList, // 角色管理
+        'userManage': UserList, // 用户管理
         'userAdd': UserAdd, // 用户新增
+        'menuTopAdd': MenuTopAdd, // 顶级菜单新增
     }
     onCollapse = (collapsed) => {
         this.setState({

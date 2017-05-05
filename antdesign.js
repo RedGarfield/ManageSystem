@@ -8,6 +8,121 @@ var handlebars = require("express-handlebars").create({ // 引入模板
 });
 var jqupload = require('jquery-file-upload-middleware'); // jq文件上传中间件
 
+let menuArr = [{
+    title: '系统管理',
+    path: '',
+    component:'',
+    icon: 'tool', 
+    children:[{
+        title: '菜单管理',
+        path: '/main/menuManage',
+        component: 'menuManage',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '角色管理',
+        path: '/main/roleManage',
+        component: 'roleManage',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '用户管理',
+        path: '/main/userManage',
+        component: 'userManage',
+        icon: 'right-circle',
+        children:[]
+    }]
+}, {
+    title: '日志管理',
+    path: '',
+    component:'',
+    icon: 'cloud', 
+    children:[{
+        title: '日志查询',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }]
+}, {
+    title: '运营管理',
+    path: '',
+    component:'',
+    icon: 'cloud', 
+    children:[{
+        title: '病历管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '订单管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '门诊订单管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '门诊品牌管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '规格管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '服务管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '项目类别管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '消息记录管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '公众号菜单',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }, {
+        title: '门诊管理',
+        path: '/',
+        component: '',
+        icon: 'right-circle',
+        children:[]
+    }]
+}];
+let contentArr = [{
+    title: '新增用户',
+    path: '/main/userAdd',
+    component: 'userAdd',
+    icon: 'right-circle',
+},{
+    title: '新增顶级菜单',
+    path: '/main/menuTopAdd',
+    component: 'menuTopAdd',
+    icon: 'right-circle',
+}]
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -58,6 +173,9 @@ app.get('/main/userManage', function(req,res){ // 用户管理
 app.get('/main/userAdd', function(req,res){ // 新增用户
     res.render("index");
 });
+app.get('/main/menuTopAdd', function(req,res){ // 新增顶级菜单
+    res.render("index");
+});
 app.get('/*', function(req,res){ // 匹配任何访问地址
     res.render("index");
 });
@@ -78,52 +196,7 @@ app.post('/login', (req,res) => { // 登录请求
 });
 
 app.post('/menuList', (req,res) => { // 查询菜单
-    res.json({"isLogin":true, "list":[{
-            title: '系统管理',
-            path: '',
-            component:'',
-            icon: 'tool', 
-            children:[{
-                title: '菜单管理',
-                path: '/main/menuManage',
-                component: 'menuManage',
-                icon: 'right-circle',
-                children:[]
-            }, {
-                title: '角色管理',
-                path: '/main/roleManage',
-                component: 'roleManage',
-                icon: 'right-circle',
-                children:[]
-            }, {
-                title: '用户管理',
-                path: '/main/userManage',
-                component: 'userManage',
-                icon: 'right-circle',
-                children:[]
-            }]
-        }, {
-            title: '日志管理',
-            path: '',
-            component:'',
-            icon: 'cloud', 
-            children:[]
-        }], 
-        "contentList":[{
-            title: '新增用户',
-            path: '/main/userAdd',
-            component: 'userAdd',
-            icon: 'right-circle',
-        }]
-    })
-});
-
-app.post('/query/sysLogList', (req,res) => { // 查询日志列表
-    res.json({"isLogin":true, "list":[{"key":"M001", "name":"lxy", "age":23, "address":"广东省广州市天河区"},
-        {"key":"M002", "name":"lxy", "age":22, "address":"广东省广州市黄埔区"},
-        {"key":"M003", "name":"lxy", "age":21, "address":"广东省广州市越秀区"},
-        {"key":"M004", "name":"lxy", "age":20, "address":"广东省广州市荔湾区"},
-        {"key":"M005", "name":"lxy", "age":19, "address":"广东省广州市海珠区"}]});
+    res.json({ "isLogin":true, "list":menuArr, "contentList": contentArr });
 });
 
 /*

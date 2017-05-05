@@ -7,7 +7,7 @@ import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal, Po
 
 const FormItem = Form.Item;
 
-class MenuManage extends React.Component{
+class MenuList extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -36,7 +36,8 @@ class MenuManage extends React.Component{
 			width: 300
 		}, {
 			title: '是否可见',
-			dataIndex: 'address'
+			dataIndex: 'isopen',
+			width: 150
 		},{
 		    title: '操作',
 		    key: 'operation',
@@ -107,7 +108,7 @@ class MenuManage extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-							<Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加顶级菜单</Button>
+							<Link to="/main/menuTopAdd"><Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加顶级菜单</Button></Link>
 						</Card>
 					</Col>
 				</Row>
@@ -125,4 +126,4 @@ class MenuManage extends React.Component{
 		)
 	}
 }
-export default MenuManage;
+export default MenuList;
