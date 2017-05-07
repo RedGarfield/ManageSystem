@@ -37,7 +37,7 @@ overflow-x: hidden;}
 .my-TimePicker-header{width: 100%;}
 /* 选择器内容 */
 .my-TimePicker-content{box-sizing: border-box;background-color: #fff;border-radius: 5px;position: absolute;top: 30px;z-index: 999;
-border-right: 1px solid #e9e9e9;width: 100%;transition: all .3s;overflow: hidden;height: 0px;}
+border-right: 1px solid #e9e9e9; border-bottom: 1px solid #e9e9e9; width: 100%;transition: all .3s;overflow: hidden;height: 0px;}
 /* 选择器内容外层容器及时间容器 */
 .my-TimePicker-content:after, .my-TimePicker-content .my-TimePicker-content-box:after{clear: both;visibility: hidden;font-size: 0;
 height: 0;content: " ";display: table;}

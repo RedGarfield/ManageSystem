@@ -87,12 +87,12 @@ class MenuTopAddForm extends React.Component {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col span={12}>
+                                    <Col span={24}>
                                         <FormItem label="图标" hasFeedback {...formItemLayout} >
-                                            {getFieldDecorator('role', {
+                                            {getFieldDecorator('time', {
                                                 rules: [{ required: true, message: '请选择菜单图标!', whitespace:true }]
                                             })(
-                                                <Input /> 
+                                                <MyTimePicker /> 
                                             )}
                                         </FormItem>
                                     </Col>

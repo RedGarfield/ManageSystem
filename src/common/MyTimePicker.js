@@ -262,9 +262,8 @@ class MyTimePicker extends React.Component {
 			<div className="my-TimePicker-wrapper" onMouseMove={obj.onMouseMove} onMouseOut={obj.onMouseOut}>
 				<div className="my-TimePicker-header">
 					<span class="ant-time-picker ">
-						<input id={obj.props.id} placeholder={obj.props.placeholder}
-							ref="my-Timepicker-text" className="ant-time-picker-input"
-							onChange={obj.onChange.bind(this)} />
+						<input id={obj.props.id} placeholder={obj.props.placeholder} className="ant-input"
+							ref="my-Timepicker-text" onChange={obj.onChange.bind(this)} />
 					</span>
 				</div>
 				<div style={{ height:(obj.state.isShow)?"138px":"0px" }} ref="my-Timepicker-content" className="my-TimePicker-content">
