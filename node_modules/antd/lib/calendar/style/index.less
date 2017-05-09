@@ -100,7 +100,7 @@
     transition: all .3s;
 
     &:hover {
-      background: @primary-1;
+      background: @item-hover-bg;
       cursor: pointer;
     }
 
@@ -128,12 +128,12 @@
   &-disabled-cell &-value {
     cursor: not-allowed;
     color: @disabled-color;
-    background: @background-color-base;
+    background: @disabled-bg;
     border-radius: 0;
     width: auto;
 
     &:hover {
-      background: @background-color-base;
+      background: @disabled-bg;
     }
   }
 
@@ -195,7 +195,7 @@
     transition: background .3s;
 
     &:hover {
-      background: @primary-1;
+      background: @item-hover-bg;
       cursor: pointer;
     }
 

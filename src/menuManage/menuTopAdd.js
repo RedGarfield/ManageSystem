@@ -88,7 +88,7 @@ class MenuTopAddForm extends React.Component {
                                 </Row>
                                 <Row>
                                     <Col span={24}>
-                                        <FormItem label="图标" hasFeedback {...formItemLayout} >
+                                        <FormItem label="实验时间" hasFeedback {...formItemLayout} >
                                             {getFieldDecorator('time', {
                                                 rules: [{ required: true, message: '请选择菜单图标!', whitespace:true }]
                                             })(

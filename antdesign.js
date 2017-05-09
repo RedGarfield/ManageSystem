@@ -184,8 +184,9 @@ app.get('/*', function(req,res){ // 匹配任何访问地址
  * 接受前端请求
  */
 app.post('/login', (req,res) => { // 登录请求
-    if(req.query.length !== 0){
-        if(req.query.username === "admin" && req.query.password === "111111"){
+    let getObj = req.body;
+    if(getObj){
+        if(getObj.username === "admin" && getObj.password === "111111"){
             res.json({"success":true,"message":"登录成功..."});
         }else{
             res.json({"success":false,"message":"账号或密码错误..."});

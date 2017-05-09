@@ -19,8 +19,10 @@ class Login extends React.Component {
         self.props.form.validateFields((err, values) => {
             if (!err) {
                 self.setState({loading: true});// 打开登录旋转
-                fetch(__dirname+'login?username='+values.userName+'&password='+values.password, {
+                fetch(__dirname+'login', {
                     method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify(values)
                 }).then(function(res){
                     return res.json().then(function(data){ // 获取服务器返回的json对象
                         return data;
@@ -49,11 +51,11 @@ class Login extends React.Component {
         const { getFieldDecorator } = this.props.form;
         const isLogin = true;
         return (
-            <Spin spinning={this.state.loading} tip="正在登录...">
+            <Spin spinning={this.state.loading} tip="正在登录，请稍后...">
                 <div className="login-wrap">
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <FormItem>
-                            {getFieldDecorator('userName', {
+                            {getFieldDecorator('username', {
                                 rules: [{ required: true, message: '请输入账号!', whitespace: true }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入账号!" />
