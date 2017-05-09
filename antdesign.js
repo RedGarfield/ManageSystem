@@ -1,6 +1,8 @@
 var path = require("path");
 
 var express = require("express");
+var mongoose = require("mongoose");
+
 var app = new express();
 
 var handlebars = require("express-handlebars").create({ // 引入模板
