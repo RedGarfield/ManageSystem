@@ -55,7 +55,7 @@ class Login extends React.Component {
                 <div className="login-wrap">
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <FormItem>
-                            {getFieldDecorator('username', {
+                            {getFieldDecorator('loginname', {
                                 rules: [{ required: true, message: '请输入账号!', whitespace: true }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入账号!" />

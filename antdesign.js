@@ -1,7 +1,8 @@
 var path = require("path");
-
 var express = require("express");
-var mongoose = require("mongoose");
+
+// 引入CURD操作服务
+var user = require("./server/user");
 
 var app = new express();
 
@@ -34,84 +35,6 @@ let menuArr = [{
         icon: 'right-circle',
         children:[]
     }]
-}, {
-    title: '日志管理',
-    path: '',
-    component:'',
-    icon: 'cloud', 
-    children:[{
-        title: '日志查询',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }]
-}, {
-    title: '运营管理',
-    path: '',
-    component:'',
-    icon: 'cloud', 
-    children:[{
-        title: '病历管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '订单管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '门诊订单管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '门诊品牌管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '规格管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '服务管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '项目类别管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '消息记录管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '公众号菜单',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }, {
-        title: '门诊管理',
-        path: '/',
-        component: '',
-        icon: 'right-circle',
-        children:[]
-    }]
 }];
 let contentArr = [{
     title: '新增用户',
@@ -123,7 +46,8 @@ let contentArr = [{
     path: '/main/menuTopAdd',
     component: 'menuTopAdd',
     icon: 'right-circle',
-}]
+}];
+
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -132,6 +56,8 @@ app.set('port', process.env.PORT || 3000); // 设置服务器端口
 
 app.use(express.static('dist')); // 托管静态文件
 app.use(require('body-parser')()); // body中间件解析post请求
+
+
 
 // 配置文件／图片上传的存放的文件夹和路径地址
 jqupload.configure({
@@ -188,11 +114,17 @@ app.get('/*', function(req,res){ // 匹配任何访问地址
 app.post('/login', (req,res) => { // 登录请求
     let getObj = req.body;
     if(getObj){
-        if(getObj.username === "admin" && getObj.password === "111111"){
-            res.json({"success":true,"message":"登录成功..."});
-        }else{
-            res.json({"success":false,"message":"账号或密码错误..."});
-        }
+        var userdata = {
+            loginname: getObj.loginname,
+            password: getObj.password
+        };
+        user.findUser(userdata).then(result => {
+            if(result){
+                res.json({"success":true,"message":"登录成功..."});
+            }else{
+                res.json({"success":false,"message":"账号或密码错误..."});
+            }
+        });
     }else{
         res.json({"success":false,"message":"该系统不存在，请联系系统管理员..."});
     }
