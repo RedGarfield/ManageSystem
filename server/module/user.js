@@ -1,4 +1,4 @@
-var mongoose = require("./db");
+var mongoose = require("../db");
 
 var UserSchema = new mongoose.Schema({ // 用户schema
 	username: String, // 用户姓名

@@ -28,11 +28,11 @@ class Login extends React.Component {
                         return data;
                     });
                 }).then(function(data){
-                    if(data.success === true){ // 如果验证用户信息正确，就跳转到系统首页
+                    if(data.code === 0){ // 如果验证用户信息正确，就跳转到系统首页
                         self.props.history.push("/main");
                     }else{
                         self.setState({loading: false});// 关闭登录旋转
-                        self.showModal(data.message);
+                        self.showModal(data.msg);
                     }
                 }).catch(function(e){
                     console.error(e);
@@ -41,10 +41,10 @@ class Login extends React.Component {
             }
         });
     }
-    showModal = (message) => {
+    showModal = (msg) => {
         Modal.error({
             title: '系统提示',
-            content: message
+            content: msg
         });
     }
     render() {
