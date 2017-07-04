@@ -28,8 +28,8 @@ class Login extends React.Component {
                         return data;
                     });
                 }).then(function(data){
-                    if(data.code === 0){ // 如果验证用户信息正确，就跳转到系统首页
-                        self.props.history.push("/main");
+                    if(data.code === 200){ // 如果验证用户信息正确，就跳转到系统首页
+                        self.props.history.push("/index");
                     }else{
                         self.setState({loading: false});// 关闭登录旋转
                         self.showModal(data.msg);
@@ -56,14 +56,14 @@ class Login extends React.Component {
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <FormItem>
                             {getFieldDecorator('loginname', {
-                                rules: [{ required: true, message: '请输入账号!', whitespace: true }],
+                                rules: [{ required: false, message: '请输入账号!', whitespace: false }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入账号!" />
                             )}
                         </FormItem>
                         <FormItem>
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, message: '请输入密码!', whitespace: true }],
+                                rules: [{ required: false, message: '请输入密码!', whitespace: false }],
                             })(
                                 <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码!" />
                             )}

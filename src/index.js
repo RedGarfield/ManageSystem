@@ -4,7 +4,7 @@ import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 
 import LoginPage from './login/login.js';
-import MainPage from './main/main.js';
+import IndexPage from './index/index.js';
 import NotFoundPage from './notFoundPage.js';
 
 const history = createBrowserHistory();
@@ -13,12 +13,12 @@ const Root = () => (
 	<Router history={history}>
 		<Switch>
 	  		<Route exact path="/" component={LoginPage} />
-	  		<Route path="/main" component={MainPage} />
+	  		<Route path="/index" component={IndexPage} />
 	  		<Route component={NotFoundPage} />
   		</Switch>
 	</Router>
 )
 
 ReactDOM.render(
-    <Root />, document.getElementById("react-content")
+	<Root />, document.getElementById("react-content")
 )

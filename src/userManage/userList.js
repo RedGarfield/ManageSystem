@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 //引入react-router
 import {Route, Link } from 'react-router-dom'
 
-import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal, Popconfirm, message } from 'antd';
+import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal, Popconfirm, message, Switch } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -19,7 +19,6 @@ class UserList extends React.Component{
 	  console.log(e);
 	  message.success('删除成功！');
 	}
-
 	cancel = (e) => {
 	  console.log(e);
 	  // message.error('删除失败！');
@@ -27,25 +26,24 @@ class UserList extends React.Component{
 	getColumns = () => {
 		let obj = this;
 		return [{
-			title: '姓名',
-			dataIndex: 'name',
-			width: 150
-		}, {
-			title: '登录名',
+			title: '用户名称',
 			dataIndex: 'username',
 			width: 150
 		}, {
-			title: '归属诊所',
-			dataIndex: 'address',
+			title: '登录名称',
+			dataIndex: 'loginname',
 			width: 150
 		}, {
-			title: '角色',
-			dataIndex: 'role',
+			title: '角色名称',
+			dataIndex: 'rolename',
 			width: 150
 		}, {
-			title: '是否可登录',
+			title: '启用状态',
 			dataIndex: 'islogin',
-			width: 150
+			width: 150,
+			render(event){
+				<Switch  checkedChildren={'开'} unCheckedChildren={'关'} />
+			}
 		}, {
 		    title: '操作',
 		    key: 'operation',
@@ -53,8 +51,7 @@ class UserList extends React.Component{
 		    render(event){
 		    	return(
 			    	<div>
-						<Button type="primary" onClick={obj.showModal.bind(obj,event)}><Icon type="search" />查看</Button>
-						<Button type="primary" onClick={obj.showModal.bind(obj,event)}><Icon type="search" />更新</Button>
+						<Button type="primary" onClick={obj.showModal.bind(obj,event)}><Icon type="edit" />编辑</Button>
 			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm} onCancel={obj.cancel} okText="确定" cancelText="放弃">
 							<Button type="primary"><Icon type="close" />删除</Button>
 						</Popconfirm>
@@ -126,7 +123,7 @@ class UserList extends React.Component{
 							    </Form>
 							</Col>
 							<Col span={12}>
-								<Link to="/main/userAdd"><Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加用户</Button></Link>
+								<Link to="/index/userAdd"><Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加用户</Button></Link>
 							</Col>
 						</Card>
 					</Col>

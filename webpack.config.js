@@ -5,12 +5,12 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
 	entry: {
 		bundle: ['./src/index.js', './src/css/common.css'],
-		vendor: ['react', 'react-dom', 'react-router', 'react-router-dom', 'antd']
+		vendor: ['react', 'react-dom', 'react-router', 'react-router-dom']
 	},
 	output: {
 		filename: '[name].js',
-		path: path.resolve(__dirname,'./dist/'),
-		publicPath: "/"
+		path: path.resolve(__dirname,'./dist/'), // 静态资源存放目录
+		publicPath: "/" //静态资源引用路径
 	},
 	module: {
 	    rules: [{
@@ -32,6 +32,6 @@ module.exports = {
 		new webpack.optimize.CommonsChunkPlugin({
             names: ['vendor']
         }),
-	    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
+	    new ExtractTextPlugin({filename: '[name].css'}) // 提取css
 	]
 }
