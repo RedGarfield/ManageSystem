@@ -3,27 +3,22 @@ import ReactDOM from 'react-dom';
 //引入react-router
 import {Route, Link } from 'react-router-dom'
 
-import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Modal, Popconfirm, message, Switch } from 'antd';
+import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Popconfirm, message } from 'antd';
 
 const FormItem = Form.Item;
 
 class UserList extends React.Component{
 	constructor(props){
-		super(props);
-		this.state = {
-			getDataArr: [],
-			visible: false
-		}
+		super(props)
 	}
-	confirm = (e) => {
-	  console.log(e);
-	  message.success('删除成功！');
+	state = {
+		dataarr: [],
+		visible: false,
 	}
-	cancel = (e) => {
-	  console.log(e);
-	  // message.error('删除失败！');
+	confirm(e) {
+	  	message.success('删除成功！')
 	}
-	getColumns = () => {
+	getColumns() {
 		let obj = this;
 		return [{
 			title: '用户名称',
@@ -39,10 +34,16 @@ class UserList extends React.Component{
 			width: 150
 		}, {
 			title: '启用状态',
-			dataIndex: 'islogin',
+			dataIndex: 'isuse',
 			width: 150,
 			render(event){
-				<Switch  checkedChildren={'开'} unCheckedChildren={'关'} />
+				let color = "color-red";
+				let word = "禁用";
+				if(event === 1){
+					color = "color-green";
+					word = "启用"
+				}
+				return <div className={color} >{word}</div>;	
 			}
 		}, {
 		    title: '操作',
@@ -51,48 +52,33 @@ class UserList extends React.Component{
 		    render(event){
 		    	return(
 			    	<div>
-						<Button type="primary" onClick={obj.showModal.bind(obj,event)}><Icon type="edit" />编辑</Button>
-			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm} onCancel={obj.cancel} okText="确定" cancelText="放弃">
-							<Button type="primary"><Icon type="close" />删除</Button>
+						<Link to={{pathname: "/index/userEdit/", state:{id:event.id}}}><Button size="large" type="primary"><Icon type="edit" />编辑</Button></Link>
+			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm.bind(obj, event.id)} okText="确定" cancelText="放弃">
+							<Button size="large" type="primary"><Icon type="close" />删除</Button>
 						</Popconfirm>
 			    	</div>
 		    	)
 			}
 		}]
 	}
-	showModal = (event) => {
-		console.log(event);
-	    this.setState({ visible: true });
+	componentWillMount(){ // 请求数据
+		this.getData();
 	}
-	handleOk = (e) => {
-	    this.setState({
-	      	visible: false,
-	    });
-	}
-	handleCancel = (e) => {
-	    this.setState({
-	      	visible: false,
-	    });
-	}
-	/*componentWillMount(){ // 请求数据
+	getData(){
 		let self = this;
-        fetch(__dirname+'query/sysLogList', {
+        fetch(__dirname+'user/list', {
             method: 'POST',
         }).then(function(res){
             return res.json().then(function(data){ // 获取服务器返回的json对象
                 return data;
             });
         }).then(function(data){
-            if(data.isLogin === true){ // 如果验证用户信息正确，就跳转到主页面
-                self.setState({"getDataArr": data.list});
-            }else{
-                self.props.history.push("/"); // 未登录跳转登录
-            }
+			self.setState({dataarr: data.data});
         }).catch(function(e){
-            console.error(e);
-            self.props.history.push("/"); // 出错或者超时跳转登录
+			console.error(e);
+            self.setState({dataarr: []});
         });
-	}*/
+	}
 	render(){
 		return(
 			<div className="panel">
@@ -131,13 +117,10 @@ class UserList extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-						    <Table columns={this.getColumns()} size="small" dataSource={this.state.getDataArr} />
+						    <Table columns={this.getColumns()} size="small" dataSource={this.state.dataarr} />
 						</Card>
 					</Col>
 				</Row>
-		        <Modal title="Basic Modal" visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
-		        	
-		        </Modal>
 			</div>
 		)
 	}

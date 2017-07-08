@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class MyTimePicker extends React.Component {  
+export default class MyTimePicker extends React.Component {  
 	constructor(props){
 		super(props);
 		this.valueHeight = 28; // 时间值的高度
@@ -316,6 +316,4 @@ MyTimePicker.defaultProps = {
 	placeholder: "请选择时间",
 	disabledHours: [],
 	disabledMinutes: []
-}
-
-export default MyTimePicker;
+};

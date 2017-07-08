@@ -5,6 +5,8 @@ import {Route, Link } from 'react-router-dom'
 
 import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, DatePicker } from 'antd';
 
+import { PieChart } from '../common/PieChart';
+
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 
@@ -12,8 +14,14 @@ class IncomePage extends React.Component{
 	constructor(props){
 		super(props);
 	}
-	componentWillMount(){ // render前加载数据
-		
+	state = {
+		data:[
+			{value:335, name:'直接访问'},
+			{value:310, name:'邮件营销'},
+			{value:234, name:'联盟广告'},
+			{value:135, name:'视频广告'},
+			{value:1548, name:'搜索引擎'}
+		]
 	}
 	handleSubmit = (e) => { // 提交搜索表单
 		e.preventDefault();
@@ -25,8 +33,8 @@ class IncomePage extends React.Component{
 			}
 		});
 	}
-	initList(){ // 请求数据
-
+	initData(){ // 请求数据
+		
 	}
 	render(){
 		const { getFieldDecorator } = this.props.form;
@@ -76,7 +84,7 @@ class IncomePage extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-						    
+							<PieChart data={this.state.data} />
 						</Card>
 					</Col>
 				</Row>

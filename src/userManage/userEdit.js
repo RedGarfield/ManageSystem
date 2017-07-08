@@ -11,13 +11,49 @@ const Option = Select.Option;
 class UserEditForm extends React.Component {
     constructor(props){
         super(props);
+        this._id = props.location.state.id;
+        this.state = {
+            username:"",
+            loginname:"",
+            password:"",
+            rolename:"",
+            isuse:null,
+        }
+    }
+    componentWillMount(){;
+        let obj = this
+        fetch(__dirname+"user/edit",{
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({id: obj._id}),
+        }).then(function(res){
+            return res.json().then(function(data){ // 获取服务器返回的json对象
+                return data;
+            });
+        }).then(function(data){
+            let result = data.data;
+            obj.setState({
+                username: result.username,
+                loginname: result.loginname,
+                password: result.password,
+                rolename: result.rolename,
+                isuse: (result.isuse === 1)?true:false,
+            });
+        }).catch(function(e){
+            console.error(e);
+        });
     }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => { // 提交表单
             if (!err) {
-                
+                console.log(values);
             }
+        });
+    }
+    handleChange = (value) => {
+        this.setState({
+            rolename:value
         });
     }
 	render() {
@@ -30,9 +66,6 @@ class UserEditForm extends React.Component {
             labelCol: { xs: { span: 24 }, sm: { span: 6 }, },
             wrapperCol: { xs: { span: 24 }, sm: { span: 16 }, },
         };
-    	const config = {
-      		rules: [{ type: 'object', required: true, message: '请选择时间!' }]
-    	};
         const _path = __dirname;
     	return (
             <div className="panel">
@@ -56,7 +89,8 @@ class UserEditForm extends React.Component {
                                 <Row>
                                     <FormItem label="用户姓名" hasFeedback {...formItemLayout} >
                                         {getFieldDecorator('username', {
-                                            rules: [{ required: true, message: '请输入用户名称!', whitespace:true, min: 6, max: 20 }]
+                                            rules: [{ required: true, message: '请输入用户名称!', whitespace:true, min: 6, max: 20 }], 
+                                            initialValue: this.state.username
                                         })(
                                             <Input />
                                         )}
@@ -65,7 +99,8 @@ class UserEditForm extends React.Component {
                                 <Row>
                                     <FormItem label="登录名称" hasFeedback {...formItemLayout} >
                                         {getFieldDecorator('loginname', {
-                                            rules: [{ required: true, message: '请输入登录名称!', whitespace:true, min: 6, max: 20 }]
+                                            rules: [{ required: true, message: '请输入登录名称!', whitespace:true, min: 6, max: 20 }],
+                                            initialValue: this.state.loginname
                                         })(
                                             <Input />
                                         )}
@@ -74,7 +109,8 @@ class UserEditForm extends React.Component {
                                 <Row>
                                     <FormItem label="密码" hasFeedback {...formItemLayout} >
                                         {getFieldDecorator('password', {
-                                            rules: [{ required: true, message: '请输入密码!', whitespace:true, min: 6, max: 20 }]
+                                            rules: [{ required: true, message: '请输入密码!', whitespace:true, min: 6, max: 20 }],
+                                            initialValue: this.state.password
                                         })(
                                             <Input type="password" />
                                         )}
@@ -82,11 +118,12 @@ class UserEditForm extends React.Component {
                                 </Row>
                                 <Row>
                                     <Col span={12}>
-                                        <FormItem label="所属角色" hasFeedback {...specialItemLayout} >
+                                        <FormItem label="所属角色" {...specialItemLayout} >
                                             {getFieldDecorator('rolename', {
-                                                rules: [{ required: true }], valuePropName: "selected", initialValue: "管理员"
+                                                rules: [{ required: true }], valuePropName: "selected", 
+                                                initialValue: this.state.rolename
                                             })(
-                                                <Select defaultValue="管理员">
+                                                <Select value={this.state.rolename} onChange={this.handleChange.bind(this)}>
                                                     <Option value="超级管理员">超级管理员</Option>
                                                     <Option value="管理员">管理员</Option>
                                                 </Select>
@@ -94,11 +131,11 @@ class UserEditForm extends React.Component {
                                         </FormItem>
                                     </Col>
                                     <Col span={12}>
-                                        <FormItem label="启用状态" hasFeedback {...specialItemLayout} >
+                                        <FormItem label="启用状态" {...specialItemLayout} >
                                             {getFieldDecorator('isopen', {
-                                                valuePropName: "checked", initialValue: true
+                                                valuePropName: "checked", initialValue: this.state.isuse
                                             })(
-                                                <Switch defaultChecked={false} checkedChildren={'开'} unCheckedChildren={'关'} />
+                                                <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
                                             )}
                                         </FormItem>
                                     </Col>

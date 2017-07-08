@@ -93,11 +93,11 @@ export default class IndexPage extends React.Component {
                     <Sider breakpoint="lg" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="0" >
                         <Menu theme="dark" mode={this.state.mode}>
                             <SubMenu key="sub1" title={<span><Icon type="setting" /><span>系统设置</span></span>}>
-                                <Menu.Item key="user"><Link to="/index/user">用户管理</Link></Menu.Item>
-                                <Menu.Item key="sys"><Link to="/index/sys">系统日志</Link></Menu.Item>
+                                <Menu.Item key="user"><Link to="/index/userList">用户管理</Link></Menu.Item>
+                                <Menu.Item key="sys"><Link to="/index/sysList">系统日志</Link></Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub2" title={<span><Icon type="setting" /><span>物料设置</span></span>}>
-                                <Menu.Item key="meterial"><Link to="/index/meterial">物料设置</Link></Menu.Item>
+                            <SubMenu key="sub2" title={<span><Icon type="setting" /><span>物料管理</span></span>}>
+                                <Menu.Item key="meterial"><Link to="/index/meterialList">物料设置</Link></Menu.Item>
                                 <Menu.Item key="income"><Link to="/index/income">物料入库报表</Link></Menu.Item>
                             </SubMenu>
                         </Menu>

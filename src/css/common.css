@@ -4,9 +4,12 @@ Microsoft YaHei,SimSun,sans-serif;line-height: 1.5;color: rgba(0,0,0,.65);font-s
 -webkit-transition: background 1s cubic-bezier(.075,.82,.165,1);transition: background 1s cubic-bezier(.075,.82,.165,1);
 overflow-x: hidden;}
 /* 控件只读样式 */
-.ele-read-only{background-color:#efefef; }
-.ele-read-only:hover{ cursor: not-allowed; }
+.ele-read-only{background-color:#efefef;}
+.ele-read-only:hover{cursor: not-allowed;}
 
+/*颜色*/
+.color-red{color: #ff0000;}
+.color-green{color: #10bd00;}
 /* 宽度 */
 .w45{width: 45%;}
 .w50{width: 50%;}

@@ -19,6 +19,8 @@ var identityKey = "skey";
 // 引入路由
 var loginRouter = require("./server/route/login");
 var logoutRouter = require("./server/route/logout");
+var userRouter = require("./server/route/user");
+var meterialRouter = require("./server/route/meterial");
 
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
@@ -55,27 +57,14 @@ app.use(body_parser); // body中间件解析post请求
 app.get("/", function(req,res){ // 登录首页
 	res.render("index");
 });
-index.get("/modifyPwd", function(req,res){ // 修改密码
-	res.render("index");
-});
-index.get("/user", function(req,res){ // 用户
-	res.render("index");
-});
-index.get("/sys", function(req, res){ // 系统日志
-	res.render("index");
-});
-index.get("/meterial", function(req, res){ // 物料
-	res.render("index");
-});
-index.get("/income", function(req, res){ // 入库
-	res.render("index");
-});
 app.get("*", function(req,res){ // 匹配任何访问地址
 	res.render("index");
 });
 
 // 接受前端请求，请求转发给对应的router去处理
 app.use("/login", loginRouter);
+app.use("/user", userRouter);
+app.use("/meterial", meterialRouter);
 
 // 启动服务器
 app.listen(app.get("port"),function(){
