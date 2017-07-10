@@ -7,7 +7,7 @@ import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Popconfir
 
 const FormItem = Form.Item;
 
-class UserList extends React.Component{
+class UserListPage extends React.Component{
 	constructor(props){
 		super(props)
 	}
@@ -52,7 +52,7 @@ class UserList extends React.Component{
 		    render(event){
 		    	return(
 			    	<div>
-						<Link to={{pathname: "/index/userEdit/", state:{id:event.id}}}><Button size="large" type="primary"><Icon type="edit" />编辑</Button></Link>
+						<Link to={{pathname: "/index/userEdit", state:{id:event.id}}}><Button size="large" type="primary"><Icon type="edit" />编辑</Button></Link>
 			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm.bind(obj, event.id)} okText="确定" cancelText="放弃">
 							<Button size="large" type="primary"><Icon type="close" />删除</Button>
 						</Popconfirm>
@@ -80,6 +80,11 @@ class UserList extends React.Component{
         });
 	}
 	render(){
+		const { getFieldDecorator } = this.props.form;
+		const formItemLayout = {
+      		labelCol: { xs: { span: 24 }, sm: { span: 7 }, },
+		    wrapperCol: { xs: { span: 24 }, sm: { span: 17 }, },
+    	};
 		return(
 			<div className="panel">
 				<Row>
@@ -99,14 +104,18 @@ class UserList extends React.Component{
 					<Col span={24}>
 						<Card bordered={false}>
 							<Col span={12}>
-								<Form className="searchForm" layout="inline">
-							        <FormItem>
-							        	<Input placeholder="请输入搜索关键字" />
-							        </FormItem>
-							        <FormItem>
-							        	<Button type="primary" htmlType="submit" ><Icon type='search' />搜索</Button>
-							        </FormItem>
-							    </Form>
+								<Form onSubmit={this.handleSubmit} className="searchForm" layout="inline">
+									<FormItem label="关键字" {...formItemLayout} >
+										{getFieldDecorator('key', {
+											rules: [{ required: false, whitespace: false }],
+										})(
+											<Input placeholder="请输入搜索关键字" />
+										)}
+									</FormItem>
+									<FormItem>
+										<Button type="primary" htmlType="submit" ><Icon type='search' />搜索</Button>
+									</FormItem>
+								</Form>
 							</Col>
 							<Col span={12}>
 								<Link to="/index/userAdd"><Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加用户</Button></Link>
@@ -125,4 +134,7 @@ class UserList extends React.Component{
 		)
 	}
 }
+
+const UserList = Form.create()(UserListPage);
+
 export default UserList;

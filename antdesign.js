@@ -13,8 +13,7 @@ var handlebars = require("express-handlebars").create({ // 引入模板
 });
 
 var app = new express();
-var index = express.Router(); // 拆分路由
-var identityKey = "skey";
+var index = express.Router();  // 拆分路由
 
 // 引入路由
 var loginRouter = require("./server/route/login");
@@ -30,13 +29,13 @@ app.use(express.static("dist")); // 托管静态文件
 app.use(body_parser); // body中间件解析post请求
 
 // app.use(session({
-// 	name: identityKey,
+// 	name: "lxy",
 // 	secret: 'chyingp',  // 用来对session id相关的cookie进行签名
 // 	store: new FileStore(),  // 本地存储session（文本文件，也可以选择其他store，比如redis的）
 // 	saveUninitialized: false,  // 是否自动保存未初始化的会话，建议false
 // 	resave: false,  // 是否每次都重新保存会话，建议false
 // 	cookie: {
-// 		maxAge: 10 * 1000  // 有效期，单位是毫秒
+// 		maxAge: 60 * 1000 * 60 // 有效期，单位是毫秒
 // 	}
 // }));
 

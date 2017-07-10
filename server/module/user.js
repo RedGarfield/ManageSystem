@@ -7,7 +7,7 @@ var UserSchema = new mongoose.Schema({ // 用户schema
 	remark: String, // 备注
 	rolename: String, // 角色名
 	lastlogintime: Date, // 最后登录时间
-	isopen: String, // 是否启用
+	isuse: String, // 是否启用
 	edittime: Date, // 修改时间
 	editperson: String // 修改人
 });
@@ -17,7 +17,51 @@ var UserSchema = new mongoose.Schema({ // 用户schema
 var UserModel = mongoose.model('User', UserSchema, 'user'); // 创建用户model
 
 module.exports = {
-	findUser(data){
+	save(data){ // 新增一个用户
+		return new Promise((resolve, reject) => { 
+			UserModel.create(data, (err, doc) => {
+				if(err){
+					reject(err);
+				}else{
+					resolve(doc);
+				}
+			})
+		});
+	},
+	remove(data){ // 删除一个用户
+		return new Promise((resolve, reject) => {
+			UserModel.remove(data, (err, doc) => {
+				if(err){
+					reject(err);
+				}else{
+					resolve(doc);
+				}
+			})
+		});
+	},
+	update(data){ // 修改一个用户
+		return new Promise((resolve, reject) => {
+			UserModel.update(data, (err, doc) => {
+				if(err){
+					reject(err);
+				}else{
+					resolve(doc);
+				}
+			})
+		});
+	},
+	findList(){ // 列出所有用户数据
+		return new Promise((resolve, reject) => {
+			UserModel.find({}, (err, doc) => {
+				if(err){
+					reject(err);
+				}else{
+					resolve(doc);
+				}
+			})
+		});
+	},
+	find(data){ // 查找单个用户
 		return new Promise((resolve, reject) => {
 			UserModel.findOne(data, (err, doc) => {
 				if(err){
@@ -27,5 +71,5 @@ module.exports = {
 				}
 			});
 		});
-	}
+	},
 }

@@ -28,13 +28,33 @@ class IncomePage extends React.Component{
 		let that = this;
 		that.props.form.validateFields((err, values) => {
 			if (!err) {
-				console.log('Received values of form: ', values);
-				// that.initList();
+				let obj = { key:"", sdate:"", edate:"" };
+				if(values.key !== undefined){
+					obj.key = values.key;
+				}
+				if(values.date.length){
+					obj.sdate = values.data[0].format("YYYY-MM-DD");
+					obj.edate = values.date[1].format("YYYY-MM-DD");
+				}
+				that.initData(obj);
 			}
 		});
 	}
-	initData(){ // 请求数据
-		
+	initData = (obj) => { // 请求数据
+		fetch(__dirname+'income/query', {
+			method: 'POST',
+			headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+			body: JSON.stringify(obj)
+		}).then(function(res){
+			return res.json().then(function(data){ // 获取服务器返回的json对象
+				return data;
+			});
+		}).then(function(data){
+			self.setState({data: data.data});
+		}).catch(function(e){
+			console.error(e);
+			self.setState({data: [{value:0, name:"暂无数据"}]});
+		});
 	}
 	render(){
 		const { getFieldDecorator } = this.props.form;
@@ -71,7 +91,7 @@ class IncomePage extends React.Component{
 									{getFieldDecorator('date', {
 										 rules: [{ required: false }],
 									})(
-										<RangePicker format="YYYY-MM-DD" />
+										<RangePicker allowClear={true} format="YYYY-MM-DD" />
 									)}
 								</FormItem>
 								<FormItem>
