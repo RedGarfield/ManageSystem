@@ -9,11 +9,45 @@ const FormItem = Form.Item;
 
 class UserListPage extends React.Component{
 	constructor(props){
-		super(props)
+		super(props);
+		this.state = {
+			dataarr: [],
+			visible: false,
+		}
 	}
-	state = {
-		dataarr: [],
-		visible: false,
+	componentWillMount(){
+		let obj = { key:"" };
+		this.initData(obj);
+	}
+	handleSubmit = (e) => { // 提交搜索表单
+		e.preventDefault();
+		let that = this;
+		that.props.form.validateFields((err, values) => {
+			if (!err) {
+				let obj = { key:""};
+				if(values.key){
+					obj.key = values.key;
+				}
+				that.initData(obj);
+			}
+		});
+	}
+	initData = (obj) => {
+		let self = this;
+        fetch(__dirname+'user/list', {
+            method: 'POST',
+			headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+			body: JSON.stringify(obj),
+        }).then(function(res){
+            return res.json().then(function(data){ // 获取服务器返回的json对象
+                return data;
+            });
+        }).then(function(data){
+			self.setState({dataarr: data.data});
+        }).catch(function(e){
+			console.error(e);
+            self.setState({dataarr: []});
+        });
 	}
 	confirm(e) {
 	  	message.success('删除成功！')
@@ -60,24 +94,6 @@ class UserListPage extends React.Component{
 		    	)
 			}
 		}]
-	}
-	componentWillMount(){ // 请求数据
-		this.getData();
-	}
-	getData(){
-		let self = this;
-        fetch(__dirname+'user/list', {
-            method: 'POST',
-        }).then(function(res){
-            return res.json().then(function(data){ // 获取服务器返回的json对象
-                return data;
-            });
-        }).then(function(data){
-			self.setState({dataarr: data.data});
-        }).catch(function(e){
-			console.error(e);
-            self.setState({dataarr: []});
-        });
 	}
 	render(){
 		const { getFieldDecorator } = this.props.form;

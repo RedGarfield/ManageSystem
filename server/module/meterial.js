@@ -37,7 +37,7 @@ module.exports = {
 	},
 	find(data){ // 查找单个用户
 		return new Promise((resolve, reject) => {
-			find.save(MeterialModel, data, resolve, reject);
+			util.findOne(MeterialModel, data, resolve, reject);
 		});
 	},
 }

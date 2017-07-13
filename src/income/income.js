@@ -13,15 +13,13 @@ const { RangePicker } = DatePicker;
 class IncomePage extends React.Component{
 	constructor(props){
 		super(props);
+		this.state = {
+			data:[],
+		}
 	}
-	state = {
-		data:[
-			{value:335, name:'直接访问'},
-			{value:310, name:'邮件营销'},
-			{value:234, name:'联盟广告'},
-			{value:135, name:'视频广告'},
-			{value:1548, name:'搜索引擎'}
-		]
+	componentWillMount(){
+		let obj = { key:"", sdate:"", edate:"" };
+		this.initData(obj);
 	}
 	handleSubmit = (e) => { // 提交搜索表单
 		e.preventDefault();
@@ -29,11 +27,11 @@ class IncomePage extends React.Component{
 		that.props.form.validateFields((err, values) => {
 			if (!err) {
 				let obj = { key:"", sdate:"", edate:"" };
-				if(values.key !== undefined){
+				if(values.key){
 					obj.key = values.key;
 				}
-				if(values.date.length){
-					obj.sdate = values.data[0].format("YYYY-MM-DD");
+				if(values.date){
+					obj.sdate = values.date[0].format("YYYY-MM-DD");
 					obj.edate = values.date[1].format("YYYY-MM-DD");
 				}
 				that.initData(obj);
@@ -41,10 +39,11 @@ class IncomePage extends React.Component{
 		});
 	}
 	initData = (obj) => { // 请求数据
+		let self = this;
 		fetch(__dirname+'income/query', {
 			method: 'POST',
 			headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-			body: JSON.stringify(obj)
+			body: JSON.stringify(obj),
 		}).then(function(res){
 			return res.json().then(function(data){ // 获取服务器返回的json对象
 				return data;
@@ -53,7 +52,7 @@ class IncomePage extends React.Component{
 			self.setState({data: data.data});
 		}).catch(function(e){
 			console.error(e);
-			self.setState({data: [{value:0, name:"暂无数据"}]});
+			self.setState({data: []});
 		});
 	}
 	render(){
@@ -61,7 +60,7 @@ class IncomePage extends React.Component{
 		const formItemLayout = {
       		labelCol: { xs: { span: 24 }, sm: { span: 7 }, },
 		    wrapperCol: { xs: { span: 24 }, sm: { span: 17 }, },
-    	};
+		};
 		return(
 			<div className="panel">
 				<Row>
@@ -104,7 +103,7 @@ class IncomePage extends React.Component{
 				<Row>
 					<Col span={24}>
 						<Card bordered={false}>
-							<PieChart data={this.state.data} />
+							{this.state.data.length === 0?<h2>暂无数据</h2>:<PieChart data={this.state.data} />}							
 						</Card>
 					</Col>
 				</Row>

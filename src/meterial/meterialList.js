@@ -9,12 +9,44 @@ const FormItem = Form.Item;
 
 class MeterialPage extends React.Component{
 	constructor(props){
-		super(props)
+		super(props);
+		this.state = {
+			dataarr: [],
+		}
 	}
-	state = {
-		dataarr: [],
-		addvisible: false,
-        editvisible: false,
+	componentWillMount(){
+		let obj = { key:"" };
+		this.initData(obj);
+	}
+	handleSubmit = (e) => { // 提交搜索表单
+		e.preventDefault();
+		let that = this;
+		that.props.form.validateFields((err, values) => {
+			if (!err) {
+				let obj = { key:""};
+				if(values.key){
+					obj.key = values.key;
+				}
+				that.initData(obj);
+			}
+		});
+	}
+	initData(obj){
+		let self = this;
+        fetch(__dirname+'meterial/list', {
+            method: 'POST',
+			headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+			body: JSON.stringify(obj),
+        }).then(function(res){
+            return res.json().then(function(data){ // 获取服务器返回的json对象
+                return data;
+            });
+        }).then(function(data){
+			self.setState({dataarr: data.data});
+        }).catch(function(e){
+			console.error(e);
+            self.setState({dataarr: []});
+        });
 	}
 	confirm(e) {
 	  	message.success('删除成功！')
@@ -23,7 +55,7 @@ class MeterialPage extends React.Component{
 		let obj = this;
 		return [{
 			title: '物料名称',
-			dataIndex: 'meterialname',
+			dataIndex: 'name',
 			width: 150
 		}, {
 			title: '单位',
@@ -35,7 +67,7 @@ class MeterialPage extends React.Component{
 			width: 150
 		}, {
 			title: '库存',
-			dataIndex: 'storage',
+			dataIndex: 'amount',
 			width: 150
 		}, {
 			title: '备注',
@@ -56,7 +88,7 @@ class MeterialPage extends React.Component{
 		    render(event){
 		    	return(
 			    	<div>
-						<Link to="/index/meterialEdit"><Button size="large" type="primary"><Icon type="edit" />编辑</Button></Link>
+						<Link to={{pathname: "/index/meterialEdit", state:{id:event.id}}}><Button size="large" type="primary"><Icon type="edit" />编辑</Button></Link>
 			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm.bind(obj, event.id)} okText="确定" cancelText="放弃">
 							<Button size="large" type="primary"><Icon type="close" />删除</Button>
 						</Popconfirm>
@@ -65,30 +97,12 @@ class MeterialPage extends React.Component{
 			}
 		}]
 	}
-	componentWillMount(){ // 请求数据
-		this.getData();
-	}
-	getData(){
-		let self = this;
-        fetch(__dirname+'meterial/list', {
-            method: 'POST',
-        }).then(function(res){
-            return res.json().then(function(data){ // 获取服务器返回的json对象
-                return data;
-            });
-        }).then(function(data){
-			self.setState({dataarr: data.data});
-            // if(data.isLogin === true){ // 如果验证用户信息正确，就跳转到主页面
-            //     self.setState({"getDataArr": data.list});
-            // }else{
-            //     self.props.history.push("/"); // 未登录跳转登录
-            // }
-        }).catch(function(e){
-			console.error(e);
-            self.setState({dataarr: []});
-        });
-	}
 	render(){
+		const { getFieldDecorator } = this.props.form;
+		const formItemLayout = {
+      		labelCol: { xs: { span: 24 }, sm: { span: 7 }, },
+		    wrapperCol: { xs: { span: 24 }, sm: { span: 17 }, },
+    	};
 		return(
 			<div className="panel">
 				<Row>
@@ -108,14 +122,18 @@ class MeterialPage extends React.Component{
 					<Col span={24}>
 						<Card bordered={false}>
 							<Col span={12}>
-								<Form className="searchForm" layout="inline">
-							        <FormItem>
-							        	<Input placeholder="请输入搜索关键字" />
-							        </FormItem>
-							        <FormItem>
-							        	<Button type="primary" htmlType="submit" ><Icon type='search' />搜索</Button>
-							        </FormItem>
-							    </Form>
+								<Form onSubmit={this.handleSubmit} className="searchForm" layout="inline">
+									<FormItem label="关键字" {...formItemLayout} >
+										{getFieldDecorator('key', {
+											rules: [{ required: false, whitespace: false }],
+										})(
+											<Input placeholder="请输入搜索关键字" />
+										)}
+									</FormItem>
+									<FormItem>
+										<Button type="primary" htmlType="submit" ><Icon type='search' />搜索</Button>
+									</FormItem>
+								</Form>
 							</Col>
 							<Col span={12}>
 								<Link to="/index/meterialAdd"><Button type="primary" className="ant-card-rightBtn"><Icon type="plus" />添加物料</Button></Link>

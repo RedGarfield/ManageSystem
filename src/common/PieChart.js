@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 //导入echarts
 var echarts = require('echarts/lib/echarts') //必须
 require('echarts/lib/chart/pie') //图表类型
+require('echarts/lib/component/tooltip');
 require('echarts/lib/component/title') //标题插件
 
 export class PieChart extends React.Component {
@@ -27,12 +28,17 @@ export class PieChart extends React.Component {
     }
     render() {
         return (
-            <div ref="pieChart" style={{width: "100%", height: "200px"}}></div>
+            <div ref="pieChart" style={{width: "100%", height: "400px"}}></div>
         )
     }
     //一个基本的echarts图表配置函数
     setPieOption(data) {
         return {
+            title: { text: '报表' },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
             series : [
                 {
                     name: '比例',

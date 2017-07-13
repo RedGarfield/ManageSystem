@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Card, Row, Breadcrumb, Form, Button, Input, Col, Select, Switch, Icon, Message } from 'antd';
-
-import MyTimePicker from '../common/MyTimePicker.js'
+import { Card, Row, Breadcrumb, Form, Button, Input, Col, Select, Checkbox, Icon, Message } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -20,7 +18,7 @@ class UserEditForm extends React.Component {
             isuse:null,
         }
     }
-    componentWillMount(){;
+    componentWillMount(){
         let obj = this
         fetch(__dirname+"user/edit",{
             method: 'POST',
@@ -135,14 +133,14 @@ class UserEditForm extends React.Component {
                                             {getFieldDecorator('isopen', {
                                                 valuePropName: "checked", initialValue: this.state.isuse
                                             })(
-                                                <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
+                                                <Checkbox  /> 
                                             )}
                                         </FormItem>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <FormItem wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } }}>
-                                        <Link to="/index/user"><Button size="large"><Icon type="rollback" />返回</Button></Link>
+                                        <Link to="/index/userList"><Button size="large"><Icon type="rollback" />返回</Button></Link>
                                         <Button type="primary" htmlType="submit" size="large"><Icon type="file" />保存</Button>
                                     </FormItem>
                                 </Row>

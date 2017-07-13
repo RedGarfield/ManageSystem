@@ -1,14 +1,4 @@
 module.exports = {
-	isLogin: function(req, res, next){
-		let session = req.session;
-		let loginUser = session.loginUser;
-		let isLogined = !!loginUser;
-
-		return {
-			isLogined: isLogined,
-			name: loginUser || ""
-		};
-	},
 	save: function(model, data, resolve, reject){ // 通用增加
 		model.create(data, (err, doc) => {
 			if(err){
@@ -27,8 +17,9 @@ module.exports = {
 			}
 		})
 	},
-	update: function(model, resolve, reject){ // 修改单个对象数据
-
+	update: function(model, condition, data, resolve, reject){ // 修改单个对象数据
+		data = {$set: data};
+		// model.update(condition, data, )
 	},
 	findList(model, resolve, reject){ // 列出该集合所有数据
 		model.find({}, (err, doc) => {
@@ -39,7 +30,7 @@ module.exports = {
 			}
 		})
 	},
-	find(model, data, resolve, reject){ // 查找单个数据
+	findOne(model, data, resolve, reject){ // 查找单个数据
 		model.findOne(data, (err, doc) => {
 			if(err){
 				reject(err);

@@ -1,4 +1,5 @@
 var express = require("express");
+var util = require("../util");
 var router = express.Router();
 // var user = require("../module/user");
 
@@ -8,13 +9,13 @@ router.post("/", (req, res) => {
     //     if(result){
     //         req.session.regenerate(err => {
     //             if(err){
-    //                 res.json({"code": 2, "msg":"登录失败"});
+    //                 res.json({"code":200, "status":"false", "msg":"登录失败"});
     //             }
-    //             req.session.loginUser = user.name;
-    //             res.json({"code":0, "msg":"登录成功..."});
+    //             req.session.user = user.name;
+    //             res.json({"code":200, "status":"success", "msg":"登录成功..."});
     //         })
     //     }else{
-    //         res.json({"code":1, "msg":"账号或密码错误..."});
+    //         res.json({"code":404, "status":"false", "msg":"账号或密码错误..."});
     //     }
     // });
     res.json({"code":200, "status":"success", "msg":"登录成功"});

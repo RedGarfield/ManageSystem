@@ -1,12 +1,11 @@
 var path = require("path");
-var express = require("express");
 
-/**
- * 引第三方库
- */
+// 引第三方库
+var express = require("express");
 var body_parser = require("body-parser")();
+var cookie = require("cookie-parser");
 var session = require("express-session");
-var FileStore = require("session-file-store")(session);
+// var MongoStore = require("connect-mongo")(session);
 var jqupload = require("jquery-file-upload-middleware"); // jq文件上传中间件
 var handlebars = require("express-handlebars").create({ // 引入模板
 	defaultLayout: "index"
@@ -20,6 +19,7 @@ var loginRouter = require("./server/route/login");
 var logoutRouter = require("./server/route/logout");
 var userRouter = require("./server/route/user");
 var meterialRouter = require("./server/route/meterial");
+var incomeRouter = require("./server/route/income");
 
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
@@ -29,13 +29,14 @@ app.use(express.static("dist")); // 托管静态文件
 app.use(body_parser); // body中间件解析post请求
 
 // app.use(session({
-// 	name: "lxy",
-// 	secret: 'chyingp',  // 用来对session id相关的cookie进行签名
-// 	store: new FileStore(),  // 本地存储session（文本文件，也可以选择其他store，比如redis的）
+// 	secret: 'usersession', // 用来对session id相关的cookie进行签名
+// 	store: new MongoStore({ // 本地存储session（文本文件，也可以选择其他store，比如redis的）
+// 		url: "mongodb://localhost/test",
+// 	}),
 // 	saveUninitialized: false,  // 是否自动保存未初始化的会话，建议false
 // 	resave: false,  // 是否每次都重新保存会话，建议false
 // 	cookie: {
-// 		maxAge: 60 * 1000 * 60 // 有效期，单位是毫秒
+// 		maxAge: 60 * 1000 * 60 // 有效期，单位是毫秒，设置过期时间1小时
 // 	}
 // }));
 
@@ -64,6 +65,7 @@ app.get("*", function(req,res){ // 匹配任何访问地址
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
 app.use("/meterial", meterialRouter);
+app.use("/income", incomeRouter);
 
 // 启动服务器
 app.listen(app.get("port"),function(){
