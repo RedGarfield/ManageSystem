@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {Route, Link } from 'react-router-dom'
 
 import { Card, Col, Row, Breadcrumb, Form, Input, Button, Icon, Table, Popconfirm, message } from 'antd';
+import moment from "moment";
 
 const FormItem = Form.Item;
 
@@ -49,8 +50,23 @@ class UserListPage extends React.Component{
             self.setState({dataarr: []});
         });
 	}
-	confirm(e) {
-	  	message.success('删除成功！')
+	confirm = (id) => {
+		let self = this;
+		fetch(__dirname+'user/del', {
+            method: 'POST',
+			headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({id: id}),
+        }).then(function(res){
+            return res.json().then(function(data){ // 获取服务器返回的json对象
+                return data;
+            });
+        }).then(function(data){
+			self.initData({ key:"" });
+			message.success('删除成功！');
+        }).catch(function(e){
+			self.initData({ key:"" });
+			message.success('删除成功！');
+        });
 	}
 	getColumns() {
 		let obj = this;
@@ -67,13 +83,28 @@ class UserListPage extends React.Component{
 			dataIndex: 'rolename',
 			width: 150
 		}, {
+			title: '修改人',
+			dataIndex: 'editperson',
+			width: 150
+		}, {
+			title: '修改时间',
+			dataIndex: 'edittime',
+			width: 150,
+			render(event){
+				let result = moment(event),
+					year = result.get("year"),
+					month = result.get("month")+1,
+					day = result.get("date");
+				return year+"-"+((month < 10)?"0"+month:month)+"-"+((day<10)?"0"+day:day);
+			}
+		}, {
 			title: '启用状态',
 			dataIndex: 'isuse',
 			width: 150,
 			render(event){
 				let color = "color-red";
 				let word = "禁用";
-				if(event === 1){
+				if(event === true){
 					color = "color-green";
 					word = "启用"
 				}
@@ -86,8 +117,8 @@ class UserListPage extends React.Component{
 		    render(event){
 		    	return(
 			    	<div>
-						<Link to={{pathname: "/index/userEdit", state:{id:event.id}}}><Button size="large" type="primary"><Icon type="edit" />编辑</Button></Link>
-			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm.bind(obj, event.id)} okText="确定" cancelText="放弃">
+						<Link to={{pathname: "/index/userEdit", state:{id:event._id}}}><Button size="large" type="primary"><Icon type="edit" />编辑</Button></Link>
+			    		<Popconfirm placement="bottomRight" title="删除后不可恢复，确定删除吗？" onConfirm={obj.confirm.bind(obj, event._id)} okText="确定" cancelText="放弃">
 							<Button size="large" type="primary"><Icon type="close" />删除</Button>
 						</Popconfirm>
 			    	</div>

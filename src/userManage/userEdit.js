@@ -20,7 +20,7 @@ class UserEditForm extends React.Component {
     }
     componentWillMount(){
         let obj = this
-        fetch(__dirname+"user/edit",{
+        fetch(__dirname+"user/find",{
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({id: obj._id}),
@@ -29,23 +29,39 @@ class UserEditForm extends React.Component {
                 return data;
             });
         }).then(function(data){
-            let result = data.data;
-            obj.setState({
-                username: result.username,
-                loginname: result.loginname,
-                password: result.password,
-                rolename: result.rolename,
-                isuse: (result.isuse === 1)?true:false,
-            });
+            if(data.data){
+                let result = data.data;
+                obj.setState({
+                    username: result.username,
+                    loginname: result.loginname,
+                    password: result.password,
+                    rolename: result.rolename,
+                    isuse: result.isuse,
+                });
+            }
         }).catch(function(e){
             console.error(e);
         });
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        let self = this;
         this.props.form.validateFields((err, values) => { // 提交表单
             if (!err) {
-                console.log(values);
+                values.id = self._id;
+                fetch(__dirname+'user/saveEdit', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify(values),
+                }).then(function(res){
+                    return res.json().then(function(data){ // 获取服务器返回的json对象
+                        return data;
+                    });
+                }).then(function(data){
+                    self.props.history.push("/index/userList");
+                }).catch(function(e){
+                    console.error(e);
+                });
             }
         });
     }
@@ -87,7 +103,7 @@ class UserEditForm extends React.Component {
                                 <Row>
                                     <FormItem label="用户姓名" hasFeedback {...formItemLayout} >
                                         {getFieldDecorator('username', {
-                                            rules: [{ required: true, message: '请输入用户名称!', whitespace:true, min: 6, max: 20 }], 
+                                            rules: [{ required: true, message: '请输入用户名称!', whitespace:true, min: 2, max: 20 }], 
                                             initialValue: this.state.username
                                         })(
                                             <Input />
@@ -130,10 +146,10 @@ class UserEditForm extends React.Component {
                                     </Col>
                                     <Col span={12}>
                                         <FormItem label="启用状态" {...specialItemLayout} >
-                                            {getFieldDecorator('isopen', {
+                                            {getFieldDecorator('isuse', {
                                                 valuePropName: "checked", initialValue: this.state.isuse
                                             })(
-                                                <Checkbox  /> 
+                                                <Checkbox defaultChecked={this.state.isuse}  /> 
                                             )}
                                         </FormItem>
                                     </Col>

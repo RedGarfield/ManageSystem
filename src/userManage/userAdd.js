@@ -12,9 +12,24 @@ class UserAddForm extends React.Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        let self = this;
         this.props.form.validateFields((err, values) => { // 提交表单
             if (!err) {
-                
+                fetch(__dirname+'user/saveAdd', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify(values),
+                }).then(function(res){
+                    return res.json().then(function(data){ // 获取服务器返回的json对象
+                        return data;
+                    });
+                }).then(function(data){
+                    console.log(data);
+                    self.props.history.push("/index/userList");
+                }).catch(function(e){
+                    console.error(e);
+                    // self.setState({dataarr: []});
+                });
             }
         });
     }
@@ -54,7 +69,7 @@ class UserAddForm extends React.Component {
                                 <Row>
                                     <FormItem label="用户姓名" hasFeedback {...formItemLayout} >
                                         {getFieldDecorator('username', {
-                                            rules: [{ required: true, message: '请输入用户名称!', whitespace:true, min: 6, max: 20 }]
+                                            rules: [{ required: true, message: '请输入用户名称!', whitespace:true, min: 2, max: 20 }]
                                         })(
                                             <Input />
                                         )}
@@ -93,10 +108,10 @@ class UserAddForm extends React.Component {
                                     </Col>
                                     <Col span={12}>
                                         <FormItem label="启用状态" {...specialItemLayout} >
-                                            {getFieldDecorator('isopen', {
+                                            {getFieldDecorator('isuse', {
                                                 valuePropName: "checked", initialValue: true
                                             })(
-                                               <Checkbox /> 
+                                               <Checkbox defaultChecked={true} /> 
                                             )}
                                         </FormItem>
                                     </Col>

@@ -1,13 +1,12 @@
 var mongoose = require("../db");
+var util = require("../util");
 
 var UserSchema = new mongoose.Schema({ // 用户schema
 	username: String, // 用户姓名
 	loginname: String, // 登录名
 	password: String, // 登陆密码
-	remark: String, // 备注
 	rolename: String, // 角色名
-	lastlogintime: Date, // 最后登录时间
-	isuse: String, // 是否启用
+	isuse: Boolean, // 是否启用
 	edittime: Date, // 修改时间
 	editperson: String // 修改人
 });
@@ -19,57 +18,27 @@ var UserModel = mongoose.model('User', UserSchema, 'user'); // 创建用户model
 module.exports = {
 	save(data){ // 新增一个用户
 		return new Promise((resolve, reject) => { 
-			UserModel.create(data, (err, doc) => {
-				if(err){
-					reject(err);
-				}else{
-					resolve(doc);
-				}
-			})
+			util.save(UserModel, data, resolve, reject);
 		});
 	},
-	remove(data){ // 删除一个用户
+	del(data){ // 删除一个用户
 		return new Promise((resolve, reject) => {
-			UserModel.remove(data, (err, doc) => {
-				if(err){
-					reject(err);
-				}else{
-					resolve(doc);
-				}
-			})
+			util.del(UserModel ,data, resolve, reject);
 		});
 	},
-	update(data){ // 修改一个用户
+	update(condition, data){ // 修改一个用户
 		return new Promise((resolve, reject) => {
-			UserModel.update(data, (err, doc) => {
-				if(err){
-					reject(err);
-				}else{
-					resolve(doc);
-				}
-			})
+			util.update(UserModel, condition, data, resolve, reject);
 		});
 	},
-	findList(){ // 列出所有用户数据
+	findList(data){ // 列出所有用户数据
 		return new Promise((resolve, reject) => {
-			UserModel.find({}, (err, doc) => {
-				if(err){
-					reject(err);
-				}else{
-					resolve(doc);
-				}
-			})
+			util.findList(UserModel, data, resolve, reject);
 		});
 	},
-	find(data){ // 查找单个用户
+	findOne(data){ // 查找单个用户
 		return new Promise((resolve, reject) => {
-			UserModel.findOne(data, (err, doc) => {
-				if(err){
-					reject(err);
-				}else{
-					resolve(doc);
-				}
-			});
+			util.findOne(UserModel, data, resolve, reject);
 		});
 	},
 }

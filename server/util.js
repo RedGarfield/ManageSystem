@@ -18,11 +18,16 @@ module.exports = {
 		})
 	},
 	update: function(model, condition, data, resolve, reject){ // 修改单个对象数据
-		data = {$set: data};
-		// model.update(condition, data, )
+		model.update(condition, data, (err, doc) => {
+			if(err){
+				reject(err)
+			}else{
+				resolve(doc);
+			}
+		})
 	},
-	findList(model, resolve, reject){ // 列出该集合所有数据
-		model.find({}, (err, doc) => {
+	findList: function(model, condition, resolve, reject){ // 列出该集合所有数据
+		model.find(condition, (err, doc) => {
 			if(err){
 				reject(err);
 			}else{
@@ -30,7 +35,7 @@ module.exports = {
 			}
 		})
 	},
-	findOne(model, data, resolve, reject){ // 查找单个数据
+	findOne: function(model, data, resolve, reject){ // 查找单个数据
 		model.findOne(data, (err, doc) => {
 			if(err){
 				reject(err);
