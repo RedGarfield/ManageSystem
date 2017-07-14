@@ -52,7 +52,7 @@ class UserAddForm extends React.Component {
                 <Row>
                     <Col span={24}>
                         <Card bordered={false}>
-                            <h2>用户列表</h2>
+                            <h2>新增用户</h2>
                             <Breadcrumb style={{ textAlign: 'right' }}>
                                 <Breadcrumb.Item>首页</Breadcrumb.Item>
                                 <Breadcrumb.Item>系统管理</Breadcrumb.Item>

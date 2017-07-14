@@ -11,9 +11,24 @@ class UserAddForm extends React.Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        let self = this;
         this.props.form.validateFields((err, values) => { // 提交表单
             if (!err) {
-                
+                fetch(__dirname+'meterial/saveAdd', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify(values),
+                }).then(function(res){
+                    return res.json().then(function(data){ // 获取服务器返回的json对象
+                        return data;
+                    });
+                }).then(function(data){
+                    console.log(data);
+                    self.props.history.push("/index/meterialList");
+                }).catch(function(e){
+                    console.error(e);
+                    // self.setState({dataarr: []});
+                });
             }
         });
     }
@@ -28,7 +43,7 @@ class UserAddForm extends React.Component {
                 <Row>
                     <Col span={24}>
                         <Card bordered={false}>
-                            <h2>用户列表</h2>
+                            <h2>新增物料</h2>
                             <Breadcrumb style={{ textAlign: 'right' }}>
                                 <Breadcrumb.Item>首页</Breadcrumb.Item>
                                 <Breadcrumb.Item>物料管理</Breadcrumb.Item>
