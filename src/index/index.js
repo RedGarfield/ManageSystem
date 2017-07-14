@@ -100,6 +100,7 @@ export default class IndexPage extends React.Component {
                                 <Menu.Item key="meterial"><Link to="/index/meterialList">物料设置</Link></Menu.Item>
                                 <Menu.Item key="income"><Link to="/index/income">物料入库报表</Link></Menu.Item>
                             </SubMenu>
+                            <Menu.Item key="play"><Link to="/index/play">自定义页面</Link></Menu.Item>
                         </Menu>
                     </Sider>
                     <Layout style={{ background: '#f1f3f6' }}>
