@@ -41,6 +41,11 @@ export default class Upload extends React.Component<UploadProps, any> {
         removeFile?: string | undefined;
         uploadError?: string | undefined;
         previewFile?: string | undefined;
+    } | {
+        uploading?: string | undefined;
+        removeFile?: string | undefined;
+        uploadError?: string | undefined;
+        previewFile?: string | undefined;
     };
     onStart: (file: any) => void;
     autoUpdateProgress(_: any, file: any): void;

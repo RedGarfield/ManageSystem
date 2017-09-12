@@ -53,31 +53,6 @@ export default class IndexPage extends React.Component {
 
         }
     }
-    // setMenu(obj){ // 设置侧边栏菜单
-    //     let arr = [], _self = this;
-    //     for(let i = 0, len = obj.length; i < len; i++){ // 循环遍历菜单
-    //         if(obj[i].children && obj[i].children.length > 0){ // 如果有子菜单
-    //             let templeMenu = (function setSon(sonMenu){ // 菜单递归函数
-    //                 let sonMenuArr = [];
-    //                 for(let j = 0, len1 = sonMenu.children.length; j < len1; j++){ // 如果子菜单红包含子菜单就调用递归去遍历
-    //                     if(sonMenu.children[j].children && sonMenu.children[j].children.length > 0){
-    //                         sonMenuArr.push(setSon(sonMenu.children[j]));
-    //                     }else{ // 没有再次包含子菜单就直接设置
-    //                         _self.componentArr.push({path:sonMenu.children[j].path,component:sonMenu.children[j].component}); // 获取菜单数据的路径和组件
-    //                         sonMenuArr.push(<Menu.Item key={sonMenu.children[j].title}><Link to={sonMenu.children[j].path}><Icon type={sonMenu.children[j].icon} />{sonMenu.children[j].title}</Link></Menu.Item>);
-    //                     }
-    //                 }
-    //                 // 返回该层级的顶层子菜单
-    //                 return <SubMenu key={sonMenu.title} title={<span><Icon type={sonMenu.icon} /><span className="nav-text">{sonMenu.title}</span></span>} >{sonMenuArr}</SubMenu>
-    //             })(obj[i]);
-    //             arr.push(templeMenu);
-    //         }else{ // 没有子菜单
-    //             _self.componentArr.push({path:obj[i].path,component:obj[i].component}); // 获取菜单数据的路径和组件
-    //             arr.push(<Menu.Item key={obj[i].title}><Link to={obj[i].path}><Icon type={obj[i].icon} />{obj[i].title}</Link></Menu.Item>);
-    //         }
-    //     }
-    //     return arr;
-    // }
     render() {
         return (
             <Layout>
@@ -105,7 +80,6 @@ export default class IndexPage extends React.Component {
                     </Sider>
                     <Layout style={{ background: '#f1f3f6' }}>
                         <Content style={{ padding: "10px 24px", margin: 0 }}>
-                            <Redirect to="/index/modifyPwd" />
                             {
                                 componentRoute.map((cur, index, arr)=>{
                                     return <Route path={"/index/"+cur.name} component={cur.value} key={index} />;

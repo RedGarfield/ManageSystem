@@ -19,6 +19,7 @@ export interface MenuProps {
     theme?: 'light' | 'dark';
     /** enum: `vertical` `horizontal` `inline` */
     mode?: 'vertical' | 'horizontal' | 'inline';
+    selectable?: boolean;
     selectedKeys?: Array<string>;
     defaultSelectedKeys?: Array<string>;
     openKeys?: Array<string>;
@@ -64,6 +65,6 @@ export default class Menu extends React.Component<MenuProps, any> {
     setOpenKeys(openKeys: any): void;
     getRealMenuMode(): "vertical" | "horizontal" | "inline" | undefined;
     getInlineCollapsed(): any;
-    getMenuOpenAnimation(): string | Object | undefined;
+    getMenuOpenAnimation(menuMode: any): string | Object | undefined;
     render(): JSX.Element;
 }

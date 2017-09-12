@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Form, DatePicker, Button, Input, Col, Select, Cascader, Radio, InputNumber, Switch, Tabs  } from 'antd';
 
-import MyTimePicker from '../common/MyTimePicker.js'
 
 const FormItem = Form.Item;
 const MonthPicker = DatePicker.MonthPicker;

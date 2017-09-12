@@ -8,7 +8,10 @@ import IndexPage from './index/index.js';
 import NotFoundPage from './notFoundPage.js';
 
 const history = createBrowserHistory();
-
+/**
+ * 我是注释1
+ */
+// 我是注释2
 const Root = () => (
 	<Router history={history}>
 		<Switch>

@@ -4,7 +4,8 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 	entry: {
-		bundle: ['./src/index.js', './src/css/common.css'],
+		bundle: ['./src/index.js', './src/css/common.css', './src/common/time-picker/css/timePicker.css'],
+		vendor: ['react', 'react-dom'],
 	},
 	output: {
 		filename: '[name].js',

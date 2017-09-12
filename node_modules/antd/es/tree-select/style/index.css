@@ -1,3 +1,6 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable declaration-bang-space-before */
+/* stylelint-disable declaration-bang-space-before */
 @-webkit-keyframes antCheckboxEffect {
   0% {
     -webkit-transform: scale(1);
@@ -107,6 +110,9 @@
   width: 8px;
   height: 1px;
 }
+.ant-select-tree-checkbox-indeterminate.ant-select-tree-checkbox-disabled .ant-select-tree-checkbox-inner:after {
+  border-color: rgba(0, 0, 0, 0.25);
+}
 .ant-select-tree-checkbox-checked .ant-select-tree-checkbox-inner:after {
   -webkit-transform: rotate(45deg) scale(1);
       -ms-transform: rotate(45deg) scale(1);
@@ -190,7 +196,8 @@
 }
 .ant-select-tree {
   margin: 0;
-  padding: 8px;
+  padding: 0 4px;
+  margin-top: -4px;
   font-size: 12px;
 }
 .ant-select-tree li {
@@ -201,7 +208,7 @@
   outline: 0;
 }
 .ant-select-tree li.filter-node > span {
-  font-weight: bold !important;
+  font-weight: 500;
 }
 .ant-select-tree li ul {
   margin: 0;
@@ -216,6 +223,7 @@
   text-decoration: none;
   color: rgba(0, 0, 0, 0.65);
   transition: all .3s;
+  width: calc(100% - 24px);
 }
 .ant-select-tree li .ant-select-tree-node-content-wrapper:hover {
   background-color: #ecf6fd;
@@ -223,15 +231,18 @@
 .ant-select-tree li .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected {
   background-color: #d2eafb;
 }
-.ant-select-tree li > span.ant-select-tree-checkbox {
+.ant-select-tree li span.ant-select-tree-checkbox {
   margin: 0 4px 0 0;
 }
-.ant-select-tree li > span.ant-select-tree-switcher,
-.ant-select-tree li > span.ant-select-tree-iconEle {
+.ant-select-tree li span.ant-select-tree-checkbox + .ant-select-tree-node-content-wrapper {
+  width: calc(100% - 46px);
+}
+.ant-select-tree li span.ant-select-tree-switcher,
+.ant-select-tree li span.ant-select-tree-iconEle {
   margin: 0;
   width: 24px;
   height: 24px;
-  line-height: 24px;
+  line-height: 22px;
   display: inline-block;
   vertical-align: middle;
   border: 0 none;
@@ -239,25 +250,21 @@
   outline: none;
   text-align: center;
 }
-.ant-select-tree li > span.ant-select-tree-icon_loading:after {
+.ant-select-tree li span.ant-select-tree-icon_loading:after {
   display: inline-block;
   font-family: 'anticon';
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  content: "\e64d";
-  font-weight: bold;
+  content: "\e6ae";
   -webkit-animation: loadingCircle 1s infinite linear;
           animation: loadingCircle 1s infinite linear;
-  margin-top: 8px;
+  color: #108ee9;
 }
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-switcher-noop {
+.ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher-noop {
   cursor: auto;
 }
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_open:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_open:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_open:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_open:after {
+.ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_open:after {
   font-size: 12px;
   font-size: 7px \9;
   -webkit-transform: scale(0.58333333) rotate(0deg);
@@ -277,29 +284,17 @@
   transition: transform .3s;
   transition: transform .3s, -webkit-transform .3s;
 }
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_open:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_open:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_open:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_open:after {
+:root .ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_open:after {
   -webkit-filter: none;
           filter: none;
 }
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_open:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_open:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_open:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_open:after {
+:root .ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_open:after {
   font-size: 12px;
 }
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_close,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_close,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_close,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_close {
+.ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_close {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
 }
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_close:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_close:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_close:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_close:after {
+.ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_close:after {
   font-size: 12px;
   font-size: 7px \9;
   -webkit-transform: scale(0.58333333) rotate(0deg);
@@ -319,23 +314,14 @@
   transition: transform .3s;
   transition: transform .3s, -webkit-transform .3s;
 }
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_close:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_close:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_close:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_close:after {
+:root .ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_close:after {
   -webkit-filter: none;
           filter: none;
 }
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_close:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_close:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_close:after,
-:root .ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_close:after {
+:root .ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_close:after {
   font-size: 12px;
 }
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-roots_close:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-center_close:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-bottom_close:after,
-.ant-select-tree li > span.ant-select-tree-switcher.ant-select-tree-noline_close:after {
+.ant-select-tree li span.ant-select-tree-switcher.ant-select-tree-switcher_close:after {
   -webkit-transform: rotate(270deg) scale(0.59);
       -ms-transform: rotate(270deg) scale(0.59);
           transform: rotate(270deg) scale(0.59);
