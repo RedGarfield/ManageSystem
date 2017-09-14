@@ -1,16 +1,18 @@
+/* 时间容器 */
 .time-container{ width: 120px; }
+.time-container.time-focus{ box-shadow: 0 0 10px rgba(0,0,0,.65); }
 .time-container, .time-input-box{position: relative;}
 .time-container{ height: auto; }
 /* 时间输入 */
 .time-input-box input{ height: 28px; box-sizing: border-box; padding: 5px 10px; 
-  border-radius: 5px; border: 1px solid #9d9d9d; outline: none; width: 100%;
-  box-shadow: 0 0 0 rgba(0,0,0,.65); transition: all .3s; border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0; }
-.time-input-box input:focus{ box-shadow: 0 0 10px rgba(0,0,0,.65); }
+  border-radius: 5px; border: 1px solid #e1dfdf; outline: none; width: 100%;
+  box-shadow: 0 0 0 rgba(0,0,0,.65); transition: all .3s; font-size: 12px; }
+.time-input-box input.no-border{ border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 /* 时间选择 */
-.time-select-box{ position: absolute; top: 100%; font-size: 0; width: 100%; z-index: 9; }
+.time-select-box{ position: absolute; top: 100%; font-size: 0; width: 100%; z-index: 9;
+  transform: scale(1, 1); transition: all .3s; }
 .time-select-box > div{ max-height: 144px; overflow: auto; width: 50%; display: inline-block;
-  font-size: .8rem; vertical-align: top; border: 1px solid #9d9d9d; border-bottom-left-radius: 5px; border-top-width: 0;
+  font-size: .8rem; vertical-align: top; border: 1px solid #e1dfdf; border-bottom-left-radius: 5px; border-top-width: 0;
   border-bottom-right-radius: 5px; }
 .time-select-box div.time-hour-inner{ border-right-width: 0; border-bottom-right-radius: 0; }
 .time-select-box div.time-minute-inner{ border-bottom-left-radius: 0; }
